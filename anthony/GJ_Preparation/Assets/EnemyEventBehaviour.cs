@@ -18,6 +18,9 @@ public class EnemyEventBehaviour : CustomEventBehaviour<EnemyEventBehaviour.Even
 
     private void PreInitialize()
     {
+        onAttackEvent = new UnityEvent();
+        onDefendEvent = new UnityEvent();
+        
         SubscribeCustomEvent(Event.ATTACK, onAttackEvent);
         SubscribeCustomEvent(Event.DEFEND, onDefendEvent);
     }

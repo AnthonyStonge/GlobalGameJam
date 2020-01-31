@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -31,14 +29,11 @@ public abstract class CustomEventBehaviour<T> : MonoBehaviour where T : struct, 
     {
         if (eventActionsDict.ContainsKey(playAction))
         {
-            foreach (var i in eventActionsDict)
-            {
-                i.Value.Invoke();
-            }
+            eventActionsDict[playAction].Invoke();
         }
         else
         {
-            Debug.Log("No actions correspond to this Event");
+            Debug.LogWarning(this + "No actions correspond to this Event");
         }
     }
 
