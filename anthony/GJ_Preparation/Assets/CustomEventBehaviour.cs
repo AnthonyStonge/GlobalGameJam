@@ -5,12 +5,29 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
+[Serializable]
+public class CustomEvent : UnityEvent
+{
+}
+
 public abstract class CustomEventBehaviour<T> : MonoBehaviour where T : struct, IConvertible, IComparable, IFormattable
 {
+    private static Dictionary<T, UnityEvent> eventActionsDict = new Dictionary<T, UnityEvent>();
 
-    private static Dictionary<T, UnityAction> eventActionsDict = new Dictionary<T, UnityAction>();
+    //Can only subscribe one event per T : Enum
+    protected void SubscribeCustomEvent(T eEvent, UnityEvent customEvent)
+    {
+        if (!eventActionsDict.ContainsKey(eEvent))
+        {
+            eventActionsDict.Add(eEvent, customEvent);
+        }
+        else
+        {
+            Debug.LogError(this + "Already contains this Key!");
+        }
+    }
 
-    public static void OnAction(T playAction)
+    public void OnAction(T playAction)
     {
         if (eventActionsDict.ContainsKey(playAction))
         {
@@ -26,25 +43,28 @@ public abstract class CustomEventBehaviour<T> : MonoBehaviour where T : struct, 
     }
 
     //Set any kind of event.
-    public void SetAction(T eventsEnum, UnityAction action)
+    public void AddAction(T eventsEnum, UnityAction action)
     {
         if (eventActionsDict.ContainsKey(eventsEnum))
         {
             //Adding Action To dict
-            eventActionsDict[eventsEnum] += action;
+            eventActionsDict[eventsEnum].AddListener(action);
         }
         else
         {
-            //Creating a new Key for Dict & add new action. 
-            eventActionsDict.Add(eventsEnum, action);
+            Debug.LogWarning(this + " : Event does not exist.");
         }
     }
 
-    public void RemoveEvent(T eventsEnum, UnityAction action)
+    public void RemoveAction(T eventsEnum, UnityAction action)
     {
         if (eventActionsDict.ContainsKey(eventsEnum))
         {
-            eventActionsDict[eventsEnum] -= action;
+            eventActionsDict[eventsEnum].RemoveListener(action);
+        }
+        else
+        {
+            Debug.LogWarning(this + " : Event does not exist.");
         }
     }
 }
