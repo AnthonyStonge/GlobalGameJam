@@ -7,14 +7,12 @@ using System.Linq;
 public class SoundManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    #region Singleton
-    static private SoundManager instance = null;
-    static public SoundManager Instance {
-        get {
-            return instance ?? (instance = new SoundManager());
-        }
-    }
+    #region MonoSingleton
+    private static SoundManager instance;
+
+    public static SoundManager Instance { get { return instance; } }
     #endregion
+    
     [Serializable]
     private struct audioFiller
     {
@@ -27,6 +25,21 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
+        
+        #region MonoSingleton
+        if (Instance != null)
+        {
+            Destroy(this.gameObject);
+            //throw new System.Exception("An instance of this singleton already exists.");
+            //On peut aussi faire un return ici
+            //return;
+        }
+        else
+        {
+            instance = SoundManager.Instance;
+            DontDestroyOnLoad(gameObject);
+        }
+        #endregion
         audioSource = new Dictionary<GameObject, AudioSource>();
         dicSound = new Dictionary<int, AudioClip>();
         foreach (audioFiller filler in audioBiblio)
