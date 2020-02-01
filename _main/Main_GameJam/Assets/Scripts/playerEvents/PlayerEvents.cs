@@ -20,8 +20,9 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     [Header("Settings")] public float speed = 100;
     public int currentNumOfChick = 0;
-    public float repairPoints = 500;
-
+    public float currentRepairPoints = 500;
+    public float initialRepairPoints = 500;
+    
     [Header("Internal")] public Rigidbody rb;
     public Transform shotSpawn;
     private GameObject bulletPrefab;
@@ -40,6 +41,8 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     private bool isMoving = false;
     private int AssID;
     private bool hasControl = true;
+    [HideInInspector] public bool gameOver = false;
+    
     [HideInInspector] public bool eggCompleted;
     [HideInInspector] public int numberEgg;
 
@@ -81,15 +84,17 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void Refresh()
     {
-        if (currentNumOfChick > 0)
+        
+        if (currentNumOfChick > 0 && !gameOver)
         {
-            repairPoints -= currentNumOfChick * Time.deltaTime;
-            if (repairPoints <= 0)
+            currentRepairPoints -= currentNumOfChick * Time.deltaTime;
+            if (currentRepairPoints <= 0)
             {
                 Game.Instance.gameState = Game.GameState.EndGame;
+                gameOver = true;
             }
         }
-        Debug.Log(this + ", repairPoints : " + repairPoints);
+        Debug.Log(this + ", repairPoints : " + currentRepairPoints);
 
         //DEBUG
         if (Input.GetKeyDown(KeyCode.P))
@@ -117,9 +122,16 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         onThrow.RemoveAllListeners();
     }
 
+    public void ResetValues()
+    {
+        currentRepairPoints = initialRepairPoints;
+        currentNumOfChick = 0;
+    }
+    
     public void SmackThatChick()
     {
         currentNumOfChick++;
+        
     }
 
     public void Move(float horizontal, float vertical)
