@@ -41,6 +41,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     private bool isMoving = false;
     private int AssID;
     private bool hasControl = true;
+    public bool canShoot = true;
     [HideInInspector] public bool gameOver = false;
     
     [HideInInspector] public bool eggCompleted;
@@ -207,13 +208,14 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void Throw()
     {
-        if (eggCompleted)
+        if (eggCompleted && canShoot)
         {
             animator.SetTrigger("Throw");
 
             TimeManager.Instance.AddTimedAction(new TimedAction(SpawnBullet, this.delayToShoot));
             TimeManager.Instance.AddTimedAction(new TimedAction(() => { hasControl = true; }, this.delayToShoot + 0.1f));
             hasControl = false;
+            canShoot = false;
         }
     }
 

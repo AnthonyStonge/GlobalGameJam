@@ -42,7 +42,12 @@ public class Bullet_Half : MonoBehaviour
             PlayerEvents events = other.transform.GetComponent<PlayerEvents>();
             events.numberEgg++;
             if (events.numberEgg >= 2)
+            {
                 events.eggCompleted = true;
+                events.canShoot = true;
+            }
+            
+                
             GameObject.Destroy(gameObject);
 
         }
