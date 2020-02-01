@@ -54,11 +54,17 @@ public class Game : IFlow
         switch (gameState)
         {
             case GameState.Start:
-               
+                playerManager.canShoot1 = false;
+                playerManager.canShoot2 = false;
                 break;
             case GameState.InGame:
+                
+                playerManager.canShoot1 = true;
+                playerManager.canShoot2 = true;
                 break;
             case  GameState.EndGame:
+                playerManager.canShoot1 = false;
+                playerManager.canShoot2 = false;
                 uiManager.SetEndGame(true);
                 break;
         }
