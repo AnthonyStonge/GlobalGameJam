@@ -9,7 +9,7 @@ public class PlayerInputs : MonoBehaviour, IFlow
 
 
     [Header("Internal")]
-    [SerializeField] private int playerID = 0;
+    [SerializeField] private int playerID;
     [SerializeField] private Player player;
     [SerializeField] public PlayerEvents playerEvents;
 
@@ -51,5 +51,10 @@ public class PlayerInputs : MonoBehaviour, IFlow
 
     public void EndFlow()
     {
+    }
+
+    public void SetPlayerID(int id)
+    {
+        playerID = id;
     }
 }
