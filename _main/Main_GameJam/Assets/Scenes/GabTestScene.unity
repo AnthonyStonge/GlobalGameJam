@@ -305,6 +305,10 @@ MonoBehaviour:
   explosionForce: 10
   explosionRadius: 2
   offsetExplosion: {x: 0, y: 0, z: 0}
+  bulletTopPart: {fileID: 5780186491860173224, guid: aa148f5b7cb33e446b450839e339e7e0,
+    type: 3}
+  bulletBottomPart: {fileID: 5780186491860173224, guid: aa148f5b7cb33e446b450839e339e7e0,
+    type: 3}
 --- !u!1 &2027983242
 GameObject:
   m_ObjectHideFlags: 0
