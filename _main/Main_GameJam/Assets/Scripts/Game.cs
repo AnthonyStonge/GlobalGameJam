@@ -18,11 +18,19 @@ public class Game : IFlow
     #endregion
 
     private PlayerManager playerManager;
-
+    private UiManager uiManager;
+    private enum GameState
+    {
+        Start,
+        InGame,
+        EndGame
+    }
+    private GameState gameState;
     public void PreInitialize()
     {
+        gameState = GameState.Start;
         playerManager = PlayerManager.Instance;
-
+        uiManager = UiManager.Instance;
         playerManager.PreInitialize();
     }
 
@@ -33,7 +41,18 @@ public class Game : IFlow
 
     public void Refresh()
     {
+        switch (gameState)
+        {
+            case GameState.Start:
+                
+                break;
+            case GameState.InGame:
+                break;
+            case  GameState.EndGame:
+                break;
+        }
         playerManager.Refresh();
+   
     }
 
     public void PhysicsRefresh()

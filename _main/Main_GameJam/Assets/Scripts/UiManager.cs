@@ -5,34 +5,51 @@ using UnityEngine;
 public class UiManager : IFlow
 {
     // Start is called before the first frame update
+    #region Singleton
 
+    private static UiManager instance = null;
+
+    //Do not use the constructor.
+    private UiManager()
+    {
+    }
+
+    public static UiManager Instance => instance ?? (instance = new UiManager());
+
+    #endregion
+
+    public bool beginGame = false;
     public void PreInitialize()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void Initialize()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void Refresh()
     {
-        throw new System.NotImplementedException();
+        if (beginGame)
+        {
+            
+        }
     }
 
     public void PhysicsRefresh()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void LateRefresh()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void EndFlow()
     {
         throw new System.NotImplementedException();
     }
+    
 }
