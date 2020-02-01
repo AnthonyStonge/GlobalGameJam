@@ -5,17 +5,12 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
-public class Bullet_Half : MonoBehaviour, IPickable
+public class Bullet_Half : MonoBehaviour
 {
     public int ID { get; private set; }
     private Rigidbody rb;
 
     public float timeBeforeFrozen = 5f;
-
-    private void Update()
-    {
-        TimeManager.Instance.Refresh();
-    }
 
     public void Initialize(int id)
     {
@@ -24,14 +19,16 @@ public class Bullet_Half : MonoBehaviour, IPickable
 
         this.rb = GetComponent<Rigidbody>();
         //TimeManager.Instance.AddTimedAction(new TimedAction(() => { this.rb.isKinematic = true; }, this.timeBeforeFrozen));
-    }
-
-
-    public void PickedUp()
-    {
         
+        //Init color
+        foreach (MeshRenderer mesh in transform.GetComponentsInChildren<MeshRenderer>())
+        {
+            if (this.ID == 10)
+                mesh.material = Resources.Load<Material>("Material/EggPlayer_1");
+            else if (this.ID == 20)
+                mesh.material = Resources.Load<Material>("Material/EggPlayer_2");
+        }
     }
-
 
     private void OnCollisionEnter(Collision other)
     {
