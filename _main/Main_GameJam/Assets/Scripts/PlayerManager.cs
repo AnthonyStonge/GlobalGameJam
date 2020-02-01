@@ -24,8 +24,8 @@ public class PlayerManager : IFlow
     public PlayerInputs player1Inputs;
     public Vector3 player1Position = new Vector3(-10, 1f, 0);
     public bool canShoot1;
-    
-    
+
+
     public GameObject player2;
     public PlayerEvents player2Events;
     public PlayerInputs player2Inputs;
@@ -63,14 +63,18 @@ public class PlayerManager : IFlow
         {
             GameObject.Destroy(halfEgg.gameObject);
         }
+
         player1.transform.eulerAngles = Vector3.zero;
         player2.transform.eulerAngles = Vector3.zero;
+
         player1Events.eggCompleted = true;
         player2Events.eggCompleted = true;
         player1Inputs.canShoot = false;
         player2Inputs.canShoot = false;
+
         player1.transform.position = player1Position;
         player2.transform.position = player2Position;
+
         player1Inputs.Initialize();
         player2Inputs.Initialize();
         player1Events.Initialize();
@@ -81,6 +85,7 @@ public class PlayerManager : IFlow
     {
         player1Inputs.canShoot = canShoot1;
         player2Inputs.canShoot = canShoot2;
+
         player1Inputs.Refresh();
         player2Inputs.Refresh();
         player1Events.Refresh();

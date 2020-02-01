@@ -72,12 +72,17 @@ public class Bullet : MonoBehaviour
             //Check if its my egg
             case "10":
                 if (this.id == 20)
+                {
                     other.transform.GetComponent<PlayerEvents>().OnAction(PlayerEvents.Event.DIE);
-
+                    PlayerManager.Instance.player2Events.SmackThatChick();
+                }
                 break;
             case "20":
                 if (this.id == 10)
+                {
                     other.transform.GetComponent<PlayerEvents>().OnAction(PlayerEvents.Event.DIE);
+                    PlayerManager.Instance.player1Events.SmackThatChick();
+                }
                 break;
         }
 
