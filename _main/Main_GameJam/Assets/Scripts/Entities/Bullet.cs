@@ -7,22 +7,25 @@ using Random = System.Random;
 
 public class Bullet : MonoBehaviour
 {
+    public float throwForce = 200;
     public float explosionForce = 10;
     public float explosionRadius = 2;
     public Vector3 offsetExplosion;
+    public float delayCollider = 0.3f;
 
     public GameObject bulletTopPart;
     public GameObject bulletBottomPart;
 
     private Transform spawnPoint1, spawnPoint2;
-
-    private void Awake()
-    {
-        Initialize();
-    }
+    private Rigidbody rb;
+    private SphereCollider[] colliders;
     
+
     public void Initialize()
     {
+        this.rb = transform.GetComponent<Rigidbody>();
+        this.colliders = transform.GetComponentsInChildren<SphereCollider>();
+        
         //Get spawn points for half bullet
         foreach (Transform trans in GetComponentsInChildren<Transform>())
         {
@@ -31,6 +34,12 @@ public class Bullet : MonoBehaviour
             else if (trans.name == "Spawn_2")
                 this.spawnPoint2 = trans;
         }
+    }
+
+    public void Launch(Transform trans)
+    {
+        //Add insane force Reeeeeeeee
+        this.rb.velocity = trans.forward * -this.throwForce;
     }
 
     private void OnCollisionEnter(Collision other)
@@ -46,10 +55,12 @@ public class Bullet : MonoBehaviour
             .GetComponent<Rigidbody>();
         Rigidbody rb2 = GameObject.Instantiate(this.bulletBottomPart, this.spawnPoint2.position, this.spawnPoint2.rotation)
             .GetComponent<Rigidbody>();
+        rb1.GetComponent<Bullet_Half>().Initialize();
+        rb2.GetComponent<Bullet_Half>().Initialize();
 
         //Add explosion force to them
         Vector3 explosionPosition = transform.position + this.offsetExplosion;
-        explosionPosition += new Vector3(UnityEngine.Random.Range(0, 2), 0, UnityEngine.Random.Range(0, 2));
+        explosionPosition += new Vector3(0, 0, 0);
         rb1.AddExplosionForce(this.explosionForce, explosionPosition, this.explosionRadius, 1,
             ForceMode.Impulse);
         rb2.AddExplosionForce(this.explosionForce, explosionPosition, this.explosionRadius, 1,
