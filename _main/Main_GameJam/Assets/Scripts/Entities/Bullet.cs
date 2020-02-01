@@ -21,15 +21,15 @@ public class Bullet : MonoBehaviour
     private SphereCollider[] colliders;
 
     private int id;
-    
+
 
     public void Initialize(int id)
     {
         this.id = id;
-        
+
         this.rb = transform.GetComponent<Rigidbody>();
         this.colliders = transform.GetComponentsInChildren<SphereCollider>();
-        
+
         //Get spawn points for half bullet
         foreach (Transform trans in GetComponentsInChildren<Transform>())
         {
@@ -48,6 +48,20 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        //Test if its a chiken
+        switch (other.transform.tag)
+        {
+            //Check if its my egg
+            case "10":
+                if(this.id == 20)
+                    other.transform.GetComponent<PlayerEvents>().Die();
+                break;
+            case "20":
+                if(this.id == 10)
+                    other.transform.GetComponent<PlayerEvents>().Die();
+                break;
+        }
+
         Explode();
         GameObject.Destroy(gameObject);
     }
@@ -57,7 +71,8 @@ public class Bullet : MonoBehaviour
         //Create 2 half bullet
         Rigidbody rb1 = GameObject.Instantiate(this.bulletTopPart, this.spawnPoint1.position, this.spawnPoint1.rotation)
             .GetComponent<Rigidbody>();
-        Rigidbody rb2 = GameObject.Instantiate(this.bulletBottomPart, this.spawnPoint2.position, this.spawnPoint2.rotation)
+        Rigidbody rb2 = GameObject
+            .Instantiate(this.bulletBottomPart, this.spawnPoint2.position, this.spawnPoint2.rotation)
             .GetComponent<Rigidbody>();
         rb1.GetComponent<Bullet_Half>().Initialize(this.id);
         rb2.GetComponent<Bullet_Half>().Initialize(this.id);
