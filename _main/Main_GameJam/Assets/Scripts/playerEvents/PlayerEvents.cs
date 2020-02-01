@@ -91,7 +91,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         //TODO maximum speed
         
         //Block movement if player not really pushing the joystick.
-        if ((horizontal < 0.05f && vertical < 0.05f) && (horizontal > -0.05f && vertical > -0.05f))
+        if ((horizontal < 0.01f && vertical < 0.01f) && (horizontal > -0.01f && vertical > -0.01f))
         {
             if (isMoving)
             {
