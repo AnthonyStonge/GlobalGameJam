@@ -38,6 +38,15 @@ public class Bullet : MonoBehaviour
             else if (trans.name == "Spawn_2")
                 this.spawnPoint2 = trans;
         }
+
+        //Init color
+        foreach (MeshRenderer mesh in transform.GetComponentsInChildren<MeshRenderer>())
+        {
+            if (this.id == 10)
+                mesh.material = Resources.Load<Material>("Material/EggPlayer_1");
+            else if (this.id == 20)
+                mesh.material = Resources.Load<Material>("Material/EggPlayer_2");
+        }
     }
 
     public void Launch(Transform trans)
@@ -53,11 +62,11 @@ public class Bullet : MonoBehaviour
         {
             //Check if its my egg
             case "10":
-                if(this.id == 20)
+                if (this.id == 20)
                     other.transform.GetComponent<PlayerEvents>().Die();
                 break;
             case "20":
-                if(this.id == 10)
+                if (this.id == 10)
                     other.transform.GetComponent<PlayerEvents>().Die();
                 break;
         }
