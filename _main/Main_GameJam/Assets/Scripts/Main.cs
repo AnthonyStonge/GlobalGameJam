@@ -21,7 +21,9 @@ public class Main : MonoBehaviour
 
     private IFlow currentFlow;
     private Game game;
+    
 
+    
     private void Awake()
     {
         
@@ -53,6 +55,7 @@ public class Main : MonoBehaviour
     public void Start()
     {
         currentFlow.Initialize();
+        
     }
 
     public void Update()
