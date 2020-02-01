@@ -17,11 +17,11 @@ public class UiManager : IFlow
     public static UiManager Instance => instance ?? (instance = new UiManager());
 
     #endregion
-
-    public bool beginGame = false;
+    
+    private UiPrincipal uiPrincipal;
     public void PreInitialize()
     {
-        
+        uiPrincipal = GameObject.FindWithTag("Ui").GetComponent<UiPrincipal>();
     }
 
     public void Initialize()
@@ -31,10 +31,9 @@ public class UiManager : IFlow
 
     public void Refresh()
     {
-        if (beginGame)
-        {
-            
-        }
+        if(Game.Instance.gameState == Game.GameState.Start)
+            uiPrincipal.CountDown();
+        
     }
 
     public void PhysicsRefresh()
@@ -51,5 +50,14 @@ public class UiManager : IFlow
     {
         throw new System.NotImplementedException();
     }
-    
+
+    public void SetBeginGame()
+    {
+        
+        uiPrincipal.timeCountDownBegin = 3;
+    }
+    public void SetEndGame(bool playerOneWin)
+    {
+        uiPrincipal.EndGame(playerOneWin);
+    }
 }
