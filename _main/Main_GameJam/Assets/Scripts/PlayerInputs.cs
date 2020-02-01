@@ -2,25 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Rewired;
+using UnityEngine.Serialization;
 
 public class PlayerInputs : MonoBehaviour, IFlow
 {
-    [Header("Settings")] public float speed;
 
-    [Header("Internal")] public Rigidbody rb;
 
+    [Header("Internal")]
     [SerializeField] private int playerID = 0;
     [SerializeField] private Player player;
+    [SerializeField] public PlayerEvents playerEvents;
 
 
     public void PreInitialize()
     {
         player = ReInput.players.GetPlayer(playerID);
 
-        if (!rb)
-        {
-            Debug.LogWarning("Player does not have a rigidbody.");
-        }
     }
 
     public void Initialize()
@@ -31,24 +28,13 @@ public class PlayerInputs : MonoBehaviour, IFlow
     {
         float moveHorizontal = player.GetAxis(0);
         float moveVertical = player.GetAxis(1);
-
+        playerEvents.Move(moveHorizontal,moveVertical);
 
         if (player.GetButtonDown("Shoot"))
         {
             Debug.Log("Shooting");
         }
 
-        Debug.Log("Move Vertical : " + moveVertical);
-        Debug.Log("Move Horizontal : " + moveHorizontal);
-
-        Vector3 movement = new Vector3(moveHorizontal, 0, moveVertical);
-        rb.AddForce(movement * speed);
-
-        //Jump
-        if (player.GetButtonDown(""))
-        {
-            //TODO
-        }
     }
 
     public void PhysicsRefresh()
