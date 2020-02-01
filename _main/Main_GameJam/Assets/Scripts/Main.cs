@@ -1,0 +1,72 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+
+public class Main : MonoBehaviour
+{
+    
+    #region Singleton MonoBehaviour
+    private static Main instance;
+
+    public static Main Instance { get { return instance; } }
+    #endregion
+
+    //[Header("Settings")]
+    //Variables that can be modified in Inspector
+
+    //[Header("Internal")]
+    //Variables that should not be modified from the inspector,
+    //but can be used for debugging
+
+    private IFlow currentFlow;
+    private Game game;
+
+    private void Awake()
+    {
+        
+        #region MonoSingleton
+        if (Instance != null)
+        {
+            Destroy(this.gameObject);
+            //throw new System.Exception("An instance of this singleton already exists.");
+            //On peut aussi faire un return ici
+            //return;
+        }
+        else
+        {
+            instance = Main.Instance;
+            DontDestroyOnLoad(gameObject);
+        }
+        #endregion
+        
+        //Instances:
+        game = Game.Instance;
+
+        //Setters:
+        currentFlow = game;
+        
+        //Init:
+        currentFlow.PreInitialize();
+    }
+
+    public void Start()
+    {
+        currentFlow.Initialize();
+    }
+
+    public void Update()
+    {
+        currentFlow.Refresh();
+    }
+
+    public void FixedUpdate()
+    {
+        currentFlow.PhysicsRefresh();
+    }
+
+    public void LateUpdate()
+    {
+        currentFlow.LateRefresh();
+    }
+}
