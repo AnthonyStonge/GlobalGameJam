@@ -39,6 +39,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     private Vector2 currentInput;
     private bool isMoving = false;
     private int AssID;
+    private bool hasControl = true;
     [HideInInspector] public bool eggCompleted;
     [HideInInspector] public int numberEgg;
 
@@ -88,13 +89,12 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
                 Game.Instance.gameState = Game.GameState.EndGame;
             }
         }
-        
+
         //DEBUG
         if (Input.GetKeyDown(KeyCode.P))
         {
             Game.Instance.gameState = Game.GameState.EndGame;
         }
-        
     }
 
     public void PhysicsRefresh()
@@ -119,29 +119,32 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     public void Move(float horizontal, float vertical)
     {
         //Block movement if player not really pushing the joystick.
-        if ((horizontal < 0.01f && vertical < 0.01f) && (horizontal > -0.01f && vertical > -0.01f))
+        if (hasControl)
         {
-            if (isMoving)
+            if ((horizontal < 0.01f && vertical < 0.01f) && (horizontal > -0.01f && vertical > -0.01f))
             {
-                OnAction(Event.STOP_MOVING);
-                isMoving = false;
+                if (isMoving)
+                {
+                    OnAction(Event.STOP_MOVING);
+                    isMoving = false;
+                }
             }
-        }
-        else
-        {
-            if (!isMoving)
+            else
             {
-                OnAction(Event.START_MOVING);
-                isMoving = true;
+                if (!isMoving)
+                {
+                    OnAction(Event.START_MOVING);
+                    isMoving = true;
+                }
+
+                var newDirection = Quaternion.LookRotation(new Vector3(horizontal, 0, vertical)).eulerAngles;
+
+                newDirection.x = 0;
+                newDirection.z = 0;
+                transform.rotation = Quaternion.Euler(newDirection);
+
+                rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
             }
-
-            var newDirection = Quaternion.LookRotation(new Vector3(horizontal, 0, vertical)).eulerAngles;
-
-            newDirection.x = 0;
-            newDirection.z = 0;
-            transform.rotation = Quaternion.Euler(newDirection);
-
-            rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
         }
     }
 
@@ -173,7 +176,6 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     public void Die()
     {
         Debug.Log("In Die");
-        
     }
 
     public void Dash()
@@ -186,8 +188,15 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         if (eggCompleted)
         {
             animator.SetTrigger("Throw");
+
             TimeManager.Instance.AddTimedAction(new TimedAction(SpawnBullet, this.delayToShoot));
+            TimeManager.Instance.AddTimedAction(new TimedAction(() => { hasControl = true; }, this.delayToShoot +0.1f));
+            hasControl = false;
         }
+    }
+
+    private void BlockControls()
+    {
     }
 
     private void SpawnBullet()
