@@ -30,6 +30,15 @@ public class Bullet : MonoBehaviour
         this.rb = transform.GetComponent<Rigidbody>();
         this.colliders = transform.GetComponentsInChildren<SphereCollider>();
 
+        int bulletLayer = 1 << LayerMask.GetMask("Bullet");
+        int defaultLayer = 1 << LayerMask.GetMask("Default");
+        Physics.IgnoreLayerCollision(defaultLayer, bulletLayer, true);
+
+        TimeManager.Instance.AddTimedAction(
+            new TimedAction(() => { Physics.IgnoreLayerCollision(defaultLayer, bulletLayer, false); }, 0.1f)
+        );
+
+
         //Get spawn points for half bullet
         foreach (Transform trans in GetComponentsInChildren<Transform>())
         {
@@ -64,7 +73,7 @@ public class Bullet : MonoBehaviour
             case "10":
                 if (this.id == 20)
                     other.transform.GetComponent<PlayerEvents>().OnAction(PlayerEvents.Event.DIE);
-                
+
                 break;
             case "20":
                 if (this.id == 10)
