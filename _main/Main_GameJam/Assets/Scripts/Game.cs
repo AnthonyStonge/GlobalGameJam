@@ -8,8 +8,7 @@ public class Game : IFlow
     #region Singleton
 
     private static Game instance = null;
-
-    //Do not use the constructor.
+    
     private Game()
     {
     }
