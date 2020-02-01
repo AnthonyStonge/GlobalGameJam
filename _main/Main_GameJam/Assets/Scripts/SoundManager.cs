@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    private PlayerEventBehaviour player;
+    private PlayerEvents player;
 
     public string Sound1 = "SON"; 
     
     // Start is called before the first frame update
     void Start()
     {
-        player.AddAction(PlayerEventBehaviour.Event.DIE, () => { Sound("D"); });
+        player.AddAction(PlayerEvents.Event.DIE, () => { Sound("D"); });
     }
 
     // Update is called once per frame

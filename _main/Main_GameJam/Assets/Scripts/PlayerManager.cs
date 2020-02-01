@@ -19,38 +19,75 @@ public class PlayerManager : IFlow
 
     #endregion
 
-    public GameObject playerGameObject;
-    public PlayerInputs player;
-    
+    public GameObject player1;
+    public PlayerEvents player1Events;
+    public PlayerInputs player1Inputs;
+    public Vector3 player1Position = new Vector3(-10, 2f, 0);
+
+    public GameObject player2;
+    public PlayerEvents player2Events;
+    public PlayerInputs player2Inputs;
+    public Vector3 player2Position = new Vector3(10, 2f, 0);
+
     public void PreInitialize()
     {
-        playerGameObject = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
-        player = playerGameObject.GetComponent<PlayerInputs>();
-        player.PreInitialize();
+        player1 = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Chicken"), player1Position,
+            Quaternion.identity);
+        player2 = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Chicken"), player2Position,
+            Quaternion.identity);
+
+        player1Inputs = player1.GetComponent<PlayerInputs>();
+        player2Inputs = player2.GetComponent<PlayerInputs>();
+
+        player1Events = player1.GetComponent<PlayerEvents>();
+        player2Events = player2.GetComponent<PlayerEvents>();
+
+        player1Inputs.SetPlayerID(0);
+        player2Inputs.SetPlayerID(1);
+
+        player1Inputs.PreInitialize();
+        player2Inputs.PreInitialize();
+        player1Events.PreInitialize();
+        player2Events.PreInitialize();
     }
 
     public void Initialize()
     {
-        player.Initialize();
+        player1Inputs.Initialize();
+        player2Inputs.Initialize();
+        player1Events.Initialize();
+        player2Events.Initialize();
     }
 
     public void Refresh()
     {
-        player.Refresh();
+        player1Inputs.Refresh();
+        player2Inputs.Refresh();
+        player1Events.Refresh();
+        player2Events.Refresh();
     }
 
     public void PhysicsRefresh()
     {
-        player.PhysicsRefresh();
+        player1Inputs.PhysicsRefresh();
+        player2Inputs.PhysicsRefresh();
+        player1Events.PhysicsRefresh();
+        player2Events.PhysicsRefresh();
     }
 
     public void LateRefresh()
     {
-        player.LateRefresh();
+        player1Inputs.LateRefresh();
+        player2Inputs.LateRefresh();
+        player1Events.LateRefresh();
+        player2Events.LateRefresh();
     }
 
     public void EndFlow()
     {
-        player.EndFlow();
+        player1Inputs.EndFlow();
+        player2Inputs.EndFlow();
+        player1Events.EndFlow();
+        player2Events.EndFlow();
     }
 }
