@@ -44,6 +44,8 @@ public class PlayerManager : IFlow
 
         player1Inputs.SetPlayerID(0);
         player2Inputs.SetPlayerID(1);
+        player1Events.SetAssID(10);
+        player2Events.SetAssID(20);
 
         player1Inputs.PreInitialize();
         player2Inputs.PreInitialize();

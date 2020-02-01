@@ -19,10 +19,14 @@ public class Bullet : MonoBehaviour
     private Transform spawnPoint1, spawnPoint2;
     private Rigidbody rb;
     private SphereCollider[] colliders;
+
+    private int id;
     
 
-    public void Initialize()
+    public void Initialize(int id)
     {
+        this.id = id;
+        
         this.rb = transform.GetComponent<Rigidbody>();
         this.colliders = transform.GetComponentsInChildren<SphereCollider>();
         
@@ -55,8 +59,8 @@ public class Bullet : MonoBehaviour
             .GetComponent<Rigidbody>();
         Rigidbody rb2 = GameObject.Instantiate(this.bulletBottomPart, this.spawnPoint2.position, this.spawnPoint2.rotation)
             .GetComponent<Rigidbody>();
-        rb1.GetComponent<Bullet_Half>().Initialize();
-        rb2.GetComponent<Bullet_Half>().Initialize();
+        rb1.GetComponent<Bullet_Half>().Initialize(this.id);
+        rb2.GetComponent<Bullet_Half>().Initialize(this.id);
 
         //Add explosion force to them
         Vector3 explosionPosition = transform.position + this.offsetExplosion;
