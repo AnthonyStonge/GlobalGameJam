@@ -21,11 +21,11 @@ public class PlayerManager : IFlow
 
     public GameObject player1;
     public PlayerInputs player1Inputs;
-    public Vector3 player1Position = new Vector3(-5,1,0);
+    public Vector3 player1Position = new Vector3(-5,1.5f,0);
 
     public GameObject player2;
     public PlayerInputs player2Inputs;
-    public Vector3 player2Position = new Vector3(5,1,0);
+    public Vector3 player2Position = new Vector3(5,1.5f,0);
     
     public void PreInitialize()
     {

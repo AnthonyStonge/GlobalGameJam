@@ -13,19 +13,25 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>
         DIE,
         TRHOW
     }
+    [Header("Settings")]
+    public float speed = 100;
+    
+    [Header("Internal")]
+    public Rigidbody rb;
+    public GameObject bulletPrefab;
+    public Transform shotSpawn;
 
     [SerializeField] private CustomEvent onDash;
     [SerializeField] private CustomEvent onDie;
     [SerializeField] private CustomEvent onThrow;
-    public float speed = 100;
-    public Rigidbody rb;
-    public GameObject bullet;
-    public Transform shotSpawn;
+    
+   
     private void PreInitialize()
     {
+        bulletPrefab = Resources.Load<GameObject>("Prefabs/NotBullet");
         
         rb = GetComponent<Rigidbody>();
-        bullet = Resources.Load<GameObject>("Prefabs/NotBullet");
+        
         onDash = new CustomEvent();
         onDie = new CustomEvent();
         onThrow = new CustomEvent();
@@ -51,11 +57,13 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>
         PreInitialize();
     }
 
-    public void Move(float input,float secondInput)
+    public void Move(float horizontal,float vertical)
     {
-        Vector3 movement = new Vector3(input, 0, secondInput);
+        //TODO When not moving but has momentum
+        //TODO minimum speed 
+        //TODO maximum speed
+        Vector3 movement = new Vector3(horizontal, 0, vertical);
         rb.AddForce(movement * speed);
-        Debug.Log("In Move");
     }
 
 
@@ -75,7 +83,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>
     public void Throw()
     {
 
-        GameObject shot = Instantiate(bullet, shotSpawn);
+        GameObject shot = Instantiate(bulletPrefab, shotSpawn);
         shot.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(100,0,0),ForceMode.Force);
         Debug.Log("In Throw");
 
