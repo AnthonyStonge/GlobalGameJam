@@ -1,20 +1,71 @@
 fileFormatVersion: 2
-guid: 7965bf1cb9b6c4743912c7dfe29418f3
+guid: 087b1b050a059c4408037d93f4beb3ef
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
-      74: -8945691123924629249
-    second: Armature|Idle
+      74: -6836198876676340817
+    second: Sphere.002|Running
   - first:
-      74: -4274770991410265338
-    second: Armature|Walking
+      74: 6260389476474903853
+    second: Sphere.002|Sphere.002Action
   - first:
-      74: -3828583913261678786
-    second: Armature|Running
+      74: -7222205583944763327
+    second: Sphere.002|Sphere.002Action.001
   - first:
-      74: -6788291789069941537
-    second: Armature|SphereAction
+      74: -9022224132491691891
+    second: Sphere.002|Sphere.002Action.002
+  - first:
+      74: -7914100393188084092
+    second: Sphere.002|Sphere.002Action.003
+  - first:
+      74: -5339217576777424199
+    second: Sphere.002|Sphere.002Action.004
+  - first:
+      74: 2793948795581694291
+    second: Sphere.002|Walking.001
+  - first:
+      74: -4365354961377291938
+    second: Sphere.003|Running
+  - first:
+      74: -2121079767627535082
+    second: Sphere.003|Sphere.002Action
+  - first:
+      74: 8869130398487227534
+    second: Sphere.003|Sphere.002Action.001
+  - first:
+      74: -8970273911441328419
+    second: Sphere.003|Sphere.002Action.002
+  - first:
+      74: -2952725914549547436
+    second: Sphere.003|Sphere.002Action.003
+  - first:
+      74: -2570368925211512051
+    second: Sphere.003|Sphere.002Action.004
+  - first:
+      74: 2862368329269893649
+    second: Sphere.003|Walking.001
+  - first:
+      74: 611329754758661269
+    second: Sphere.004|Running
+  - first:
+      74: -6786209901914233934
+    second: Sphere.004|Sphere.002Action
+  - first:
+      74: 8590654642379698382
+    second: Sphere.004|Sphere.002Action.001
+  - first:
+      74: 2511750056716910903
+    second: Sphere.004|Sphere.002Action.002
+  - first:
+      74: 1204769968195647035
+    second: Sphere.004|Sphere.002Action.003
+  - first:
+      74: -6765336399026326230
+    second: Sphere.004|Sphere.002Action.004
+  - first:
+      74: 4234373848656904811
+    second: Sphere.004|Walking.001
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -101,7 +152,7 @@ ModelImporter:
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
-  avatarSetup: 1
+  avatarSetup: 0
   additionalBone: 0
   userData: 
   assetBundleName: 

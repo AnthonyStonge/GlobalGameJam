@@ -9,12 +9,6 @@ ModelImporter:
   - first:
       74: -4274770991410265338
     second: Armature|Walking
-  - first:
-      74: -3828583913261678786
-    second: Armature|Running
-  - first:
-      74: -6788291789069941537
-    second: Armature|SphereAction
   externalObjects: {}
   materials:
     materialImportMode: 1
