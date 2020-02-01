@@ -138,6 +138,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     public void Die()
     {
         Debug.Log("In Die");
+        Game.Instance.gameState = Game.GameState.EndGame;
     }
 
     public void Dash()
