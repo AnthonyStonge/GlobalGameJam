@@ -32,6 +32,8 @@ public class PlayerInputs : MonoBehaviour, IFlow
 
         if (player.GetButtonDown("Shoot"))
         {
+            playerEvents.Throw();
+            
             Debug.Log("Shooting");
         }
 
