@@ -20,7 +20,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     [Header("Settings")] public float speed = 100;
     public int currentNumOfChick = 0;
-    public int repairPoints = 1000;
+    public float repairPoints = 500;
 
     [Header("Internal")] public Rigidbody rb;
     public Transform shotSpawn;
@@ -83,12 +83,13 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     {
         if (currentNumOfChick > 0)
         {
-            repairPoints -= currentNumOfChick;
+            repairPoints -= currentNumOfChick * Time.deltaTime;
             if (repairPoints <= 0)
             {
                 Game.Instance.gameState = Game.GameState.EndGame;
             }
         }
+        Debug.Log(this + ", repairPoints : " + repairPoints);
 
         //DEBUG
         if (Input.GetKeyDown(KeyCode.P))
@@ -114,6 +115,11 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         onDash.RemoveAllListeners();
         onDie.RemoveAllListeners();
         onThrow.RemoveAllListeners();
+    }
+
+    public void SmackThatChick()
+    {
+        currentNumOfChick++;
     }
 
     public void Move(float horizontal, float vertical)
@@ -190,7 +196,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
             animator.SetTrigger("Throw");
 
             TimeManager.Instance.AddTimedAction(new TimedAction(SpawnBullet, this.delayToShoot));
-            TimeManager.Instance.AddTimedAction(new TimedAction(() => { hasControl = true; }, this.delayToShoot +0.1f));
+            TimeManager.Instance.AddTimedAction(new TimedAction(() => { hasControl = true; }, this.delayToShoot + 0.1f));
             hasControl = false;
         }
     }

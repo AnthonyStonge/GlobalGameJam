@@ -24,9 +24,14 @@ public class Bullet_Half : MonoBehaviour
         foreach (MeshRenderer mesh in transform.GetComponentsInChildren<MeshRenderer>())
         {
             if (this.ID == 10)
+            { 
                 mesh.material = Resources.Load<Material>("Material/EggPlayer_1");
+            }
+               
             else if (this.ID == 20)
+            {
                 mesh.material = Resources.Load<Material>("Material/EggPlayer_2");
+            }
         }
     }
 

@@ -372,7 +372,7 @@ MonoBehaviour:
       m_Calls: []
   footStepLeft: {fileID: 1653396038240286253}
   footStepRight: {fileID: 7345290797908767276}
-  delayToShoot: 0.3
+  delayToShoot: 0.2
   eggCompleted: 0
   numberEgg: 0
 --- !u!54 &3983470910506093805
