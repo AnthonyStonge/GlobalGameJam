@@ -69,6 +69,7 @@ public class Game : IFlow
                 break;
         }
         playerManager.Refresh();
+
         timeManager.Refresh();
     }
 
