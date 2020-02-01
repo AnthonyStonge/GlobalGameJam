@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Boo.Lang.Environments;
 using UnityEngine;
 
 
@@ -19,30 +20,37 @@ public class PlayerManager : IFlow
     #endregion
 
     public GameObject playerGameObject;
-    public PlayerController player;
+    public PlayerInputs player;
     
     public void PreInitialize()
     {
-        //player = playerGameObject.GetComponent<PlayerController>();
+        playerGameObject = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
+        player = playerGameObject.GetComponent<PlayerInputs>();
+        player.PreInitialize();
     }
 
     public void Initialize()
     {
+        player.Initialize();
     }
 
     public void Refresh()
     {
+        player.Refresh();
     }
 
     public void PhysicsRefresh()
     {
+        player.PhysicsRefresh();
     }
 
     public void LateRefresh()
     {
+        player.LateRefresh();
     }
 
     public void EndFlow()
     {
+        player.EndFlow();
     }
 }
