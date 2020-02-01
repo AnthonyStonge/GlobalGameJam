@@ -9,7 +9,9 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     {
         DASH,
         DIE,
-        TRHOW
+        TRHOW,
+        START_MOVING,
+        STOP_MOVING
     }
 
     [Header("Settings")] public float speed = 100;
@@ -21,28 +23,39 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     [SerializeField] private CustomEvent onDash;
     [SerializeField] private CustomEvent onDie;
     [SerializeField] private CustomEvent onThrow;
+    [SerializeField] private CustomEvent onStartMoving;
+    [SerializeField] private CustomEvent onStopMoving;
 
+    private Animator animator;
     private Vector2 currentInput;
+    private bool isMoving = false;
 
     public void PreInitialize()
     {
         bulletPrefab = Resources.Load<GameObject>("Prefabs/NotBullet");
 
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
 
         onDash = new CustomEvent();
         onDie = new CustomEvent();
         onThrow = new CustomEvent();
+        onStartMoving = new CustomEvent();
+        onStopMoving = new CustomEvent();
 
         currentInput = new Vector2();
 
         SubscribeCustomEvent(Event.DIE, onDie);
         SubscribeCustomEvent(Event.DASH, onDash);
         SubscribeCustomEvent(Event.TRHOW, onThrow);
+        SubscribeCustomEvent(Event.START_MOVING, onStartMoving);
+        SubscribeCustomEvent(Event.STOP_MOVING, onStopMoving);
 
         AddAction(Event.DIE, Die);
         AddAction(Event.DASH, Dash);
         AddAction(Event.TRHOW, Throw);
+        AddAction(Event.START_MOVING, StartMoving);
+        AddAction(Event.STOP_MOVING,StopMoving);
     }
 
     public void Initialize()
@@ -76,13 +89,25 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     {
         //TODO minimum speed 
         //TODO maximum speed
-
+        
         //Block movement if player not really pushing the joystick.
         if ((horizontal < 0.05f && vertical < 0.05f) && (horizontal > -0.05f && vertical > -0.05f))
         {
+            if (isMoving)
+            {
+                OnAction(Event.STOP_MOVING);
+                isMoving = false;
+            }
+            
         }
         else
         {
+            if (!isMoving)
+            {
+                OnAction(Event.START_MOVING);
+                isMoving = true;
+            }
+            
             var newDirection = Quaternion.LookRotation(new Vector3(horizontal, 0, vertical)).eulerAngles;
 
             newDirection.x = 0;
@@ -91,6 +116,17 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
             
             rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
         }
+    }
+
+    public void StartMoving()
+    {
+        animator.SetBool("Run", true);
+        
+    }
+
+    public void StopMoving()
+    {
+        animator.SetBool("Run", false);
     }
 
 

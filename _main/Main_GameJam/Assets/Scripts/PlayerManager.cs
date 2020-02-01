@@ -22,18 +22,18 @@ public class PlayerManager : IFlow
     public GameObject player1;
     public PlayerEvents player1Events;
     public PlayerInputs player1Inputs;
-    public Vector3 player1Position = new Vector3(-5, 2f, 0);
+    public Vector3 player1Position = new Vector3(-10, 2f, 0);
 
     public GameObject player2;
     public PlayerEvents player2Events;
     public PlayerInputs player2Inputs;
-    public Vector3 player2Position = new Vector3(5, 2f, 0);
+    public Vector3 player2Position = new Vector3(10, 2f, 0);
 
     public void PreInitialize()
     {
-        player1 = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Player"), player1Position,
+        player1 = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Chicken"), player1Position,
             Quaternion.identity);
-        player2 = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Player"), player2Position,
+        player2 = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Chicken"), player2Position,
             Quaternion.identity);
 
         player1Inputs = player1.GetComponent<PlayerInputs>();
