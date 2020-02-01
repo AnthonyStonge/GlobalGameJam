@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Experimental.VFX;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 {
@@ -11,7 +13,9 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         DIE,
         TRHOW,
         START_MOVING,
-        STOP_MOVING
+        STOP_MOVING,
+        FOOT_STEP_LEFT,
+        FOOT_STEP_RIGHT
     }
 
     [Header("Settings")] public float speed = 100;
@@ -25,6 +29,8 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     [SerializeField] private CustomEvent onThrow;
     [SerializeField] private CustomEvent onStartMoving;
     [SerializeField] private CustomEvent onStopMoving;
+    [SerializeField] private VisualEffect footStepLeft;
+    [SerializeField] private VisualEffect footStepRight;
 
     private Animator animator;
     private Vector2 currentInput;
@@ -60,7 +66,9 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         AddAction(Event.DASH, Dash);
         AddAction(Event.TRHOW, Throw);
         AddAction(Event.START_MOVING, StartMoving);
-        AddAction(Event.STOP_MOVING,StopMoving);
+        AddAction(Event.STOP_MOVING, StopMoving);
+        AddAction(Event.FOOT_STEP_LEFT, Foot_Step_Left);
+        AddAction(Event.FOOT_STEP_RIGHT, Foot_Step_Right);
     }
 
     public void Initialize()
@@ -94,7 +102,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     {
         //TODO minimum speed 
         //TODO maximum speed
-        
+
         //Block movement if player not really pushing the joystick.
         if ((horizontal < 0.01f && vertical < 0.01f) && (horizontal > -0.01f && vertical > -0.01f))
         {
@@ -103,7 +111,6 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
                 OnAction(Event.STOP_MOVING);
                 isMoving = false;
             }
-            
         }
         else
         {
@@ -112,13 +119,13 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
                 OnAction(Event.START_MOVING);
                 isMoving = true;
             }
-            
+
             var newDirection = Quaternion.LookRotation(new Vector3(horizontal, 0, vertical)).eulerAngles;
 
             newDirection.x = 0;
             newDirection.z = 0;
             transform.rotation = Quaternion.Euler(newDirection);
-            
+
             rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
         }
     }
@@ -126,7 +133,6 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     public void StartMoving()
     {
         animator.SetBool("Run", true);
-        
     }
 
     public void StopMoving()
@@ -134,10 +140,19 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         animator.SetBool("Run", false);
     }
 
+    public void Foot_Step_Left()
+    {
+        this.footStepLeft.Play();
+    }
+    public void Foot_Step_Right()
+    {
+        this.footStepRight.Play();
+    }
 
     public void Die()
     {
         Debug.Log("In Die");
+        animator.SetTrigger("Die");
         Game.Instance.gameState = Game.GameState.EndGame;
     }
 
@@ -171,11 +186,10 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         Vector3 direction = transform.forward * 5;
         Gizmos.DrawRay(transform.position, direction);
     }
-    
+
     public void SetAssID(int id)
     {
         AssID = id;
         transform.tag = id.ToString();
     }
-    
 }
