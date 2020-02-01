@@ -28,7 +28,7 @@ public class Game : IFlow
     public GameState gameState;
     public void PreInitialize()
     {
-        gameState = GameState.EndGame;
+        
         playerManager = PlayerManager.Instance;
         uiManager = UiManager.Instance;
         playerManager.PreInitialize();
@@ -37,7 +37,9 @@ public class Game : IFlow
 
     public void Initialize()
     {
+        gameState = GameState.Start;
         playerManager.Initialize();
+        uiManager.SetBeginGame();
     }
 
     public void Refresh()

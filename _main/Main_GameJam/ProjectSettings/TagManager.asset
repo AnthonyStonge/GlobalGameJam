@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CamController
   - Ui
+  - CamBrain
   layers:
   - Default
   - TransparentFX

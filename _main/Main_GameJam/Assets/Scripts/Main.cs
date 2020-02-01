@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 
@@ -12,17 +13,24 @@ public class Main : MonoBehaviour
     public static Main Instance { get { return instance; } }
     #endregion
 
+    public enum FlowState
+    {
+        Menu,
+        Game
+    }
+
+    public FlowState flowState = FlowState.Menu;
     //[Header("Settings")]
     //Variables that can be modified in Inspector
 
     //[Header("Internal")]
     //Variables that should not be modified from the inspector,
     //but can be used for debugging
-
+    public CinemachineVirtualCamera VirtualCamera;
+    private CinemachineBasicMultiChannelPerlin virtualCameraNoise;
     private IFlow currentFlow;
     private Game game;
-    
-
+    private Menu menu;
     
     private void Awake()
     {
@@ -44,18 +52,20 @@ public class Main : MonoBehaviour
         
         //Instances:
         game = Game.Instance;
+        menu = Menu.Instance;
 
         //Setters:
-        currentFlow = game;
         
         //Init:
-        currentFlow.PreInitialize();
+        menu.PreInitialize();
+        game.PreInitialize();
     }
 
     public void Start()
     {
-        currentFlow.Initialize();
-        
+        ChangeFlow("menu");
+        if (VirtualCamera != null)
+            virtualCameraNoise = VirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
     }
 
     public void Update()
@@ -71,5 +81,38 @@ public class Main : MonoBehaviour
     public void LateUpdate()
     {
         currentFlow.LateRefresh();
+    }
+
+    public void ChangeFlow(string state)
+    {
+        if(state == "menu")
+            currentFlow = menu;
+        else
+        {
+            currentFlow = game;
+        }
+        currentFlow.Initialize();
+    }
+
+    public void StartShake(float ShakeAmplitude, float ShakeFrequency, float ShakeDuration)
+    {
+        StartCoroutine(shake(ShakeAmplitude, ShakeFrequency, ShakeDuration));
+    }
+    private IEnumerator shake(float ShakeAmplitude2, float ShakeFrequency2,float ShakeDuration2)
+    {
+        while (ShakeDuration2 > 0f)
+        {
+            virtualCameraNoise.m_AmplitudeGain = ShakeAmplitude2;
+            virtualCameraNoise.m_FrequencyGain = ShakeFrequency2;
+            ShakeDuration2 -= Time.deltaTime;
+            yield return null;
+        }
+        virtualCameraNoise.m_AmplitudeGain = 0f;
+        virtualCameraNoise.m_FrequencyGain = 0f;
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

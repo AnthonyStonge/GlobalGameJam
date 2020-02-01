@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,23 +7,54 @@ using UnityEngine;
 public class UiPrincipal : MonoBehaviour
 {
     // Start is called before the first frame update
+    public int numberOfChoiceInMenu = 2;
+    public int choiceOn = 0;
+    public Main main;
     public TextMeshProUGUI startText;
     public TextMeshProUGUI endText;
+    public GameObject menuPanel;
+    public GameObject gameUi;
+    private float countDownDefaultSize;
     [HideInInspector]public float timeCountDownBegin = -1;
-    
-    
+
+    private void Start()
+    {
+        countDownDefaultSize = startText.rectTransform.rect.height;
+    }
+
+    public void Refresh()
+    {
+        if (timeCountDownBegin == -1)
+        {
+            
+        }
+        else
+            CountDown();
+        
+    }
     public void CountDown()
     {
         if (timeCountDownBegin >= 0)
         {
             timeCountDownBegin -= Time.deltaTime;
-            if(((int)timeCountDownBegin + 1).ToString() != startText.text)
-                startText.text = ((int)timeCountDownBegin + 1).ToString();
+            if (((int) timeCountDownBegin + 1).ToString() != startText.text)
+            {
+                main.StartShake(1.3f, 0.2f, 0.15f);
+                startText.text = ((int) timeCountDownBegin + 1).ToString();
+                startText.rectTransform.sizeDelta = new Vector2(startText.rectTransform.rect.width, countDownDefaultSize);
+            }
+            Shrink(5);
         }
         else if (timeCountDownBegin > -1)
         {
             timeCountDownBegin -= Time.deltaTime;
-            startText.text = "START";
+            if (startText.text != "START")
+            {
+                startText.text = "START";
+                startText.rectTransform.sizeDelta = new Vector2(startText.rectTransform.rect.width, countDownDefaultSize);
+                main.StartShake(2f, 0.2f, 0.5f);
+            }
+            Shrink(7);
         }
         else
         {
@@ -43,11 +75,33 @@ public class UiPrincipal : MonoBehaviour
 
     public void Recommencer()
     {
+        Game.Instance.gameState = Game.GameState.Start;
+        StartGame();
+        
+        
+    }
+
+    public void StartMenu()
+    {
+        menuPanel.SetActive(true);
+        gameUi.SetActive(false);
+    }
+    public void StartGame()
+    {
+        menuPanel.SetActive(false);
+        gameUi.SetActive(true);
         endText.transform.parent.gameObject.SetActive(false);
         startText.transform.parent.gameObject.SetActive(true);
-        Game.Instance.gameState = Game.GameState.Start;
-        
-        UiManager.Instance.SetBeginGame();
+        timeCountDownBegin = 3;
+    }
+
+    private void Shrink(int sizeToReduce)
+    {
+        startText.rectTransform.sizeDelta = new Vector2(startText.rectTransform.rect.width, startText.rectTransform.rect.height - sizeToReduce);
+    }
+
+    public void ChangeTextColor()
+    {
         
     }
 }

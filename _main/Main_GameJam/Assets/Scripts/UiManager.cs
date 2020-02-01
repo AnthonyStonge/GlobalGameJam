@@ -53,11 +53,15 @@ public class UiManager : IFlow
 
     public void SetBeginGame()
     {
-        
-        uiPrincipal.timeCountDownBegin = 3;
+        uiPrincipal.StartGame();
     }
     public void SetEndGame(bool playerOneWin)
     {
         uiPrincipal.EndGame(playerOneWin);
+    }
+
+    public void SetMenu()
+    {
+        uiPrincipal.StartMenu();
     }
 }
