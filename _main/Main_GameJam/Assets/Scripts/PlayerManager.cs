@@ -18,8 +18,12 @@ public class PlayerManager : IFlow
 
     #endregion
 
+    public GameObject playerGameObject;
+    public PlayerController player;
+    
     public void PreInitialize()
     {
+        //player = playerGameObject.GetComponent<PlayerController>();
     }
 
     public void Initialize()
