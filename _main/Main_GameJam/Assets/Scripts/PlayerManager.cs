@@ -19,38 +19,54 @@ public class PlayerManager : IFlow
 
     #endregion
 
-    public GameObject playerGameObject;
-    public PlayerInputs player;
+    public GameObject player1;
+    public PlayerInputs player1Inputs;
+
+    public GameObject player2;
+    public PlayerInputs player2Inputs;
     
     public void PreInitialize()
     {
-        playerGameObject = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
-        player = playerGameObject.GetComponent<PlayerInputs>();
-        player.PreInitialize();
+        player1 = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
+        player2 = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Player"));
+        
+        player1Inputs = player1.GetComponent<PlayerInputs>();
+        player2Inputs = player2.GetComponent<PlayerInputs>();
+
+        player1Inputs.SetPlayerID(0);
+        player2Inputs.SetPlayerID(1);
+        
+        player1Inputs.PreInitialize();
+        player2Inputs.PreInitialize();
     }
 
     public void Initialize()
     {
-        player.Initialize();
+        player1Inputs.Initialize();
+        player2Inputs.Initialize();
     }
 
     public void Refresh()
     {
-        player.Refresh();
+        player1Inputs.Refresh();
+        player2Inputs.Refresh();
     }
 
     public void PhysicsRefresh()
     {
-        player.PhysicsRefresh();
+        player1Inputs.PhysicsRefresh();
+        player2Inputs.PhysicsRefresh();
     }
 
     public void LateRefresh()
     {
-        player.LateRefresh();
+        player1Inputs.LateRefresh();
+        player2Inputs.LateRefresh();
     }
 
     public void EndFlow()
     {
-        player.EndFlow();
+        player1Inputs.EndFlow();
+        player2Inputs.EndFlow();
     }
 }

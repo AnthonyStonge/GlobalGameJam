@@ -13,7 +13,7 @@ public class CustomEvent : UnityEvent
 
 public abstract class CustomEventBehaviour<T> : MonoBehaviour where T : struct, IConvertible, IComparable, IFormattable
 {
-    private static Dictionary<T, UnityEvent> eventActionsDict = new Dictionary<T, UnityEvent>();
+    private Dictionary<T, UnityEvent> eventActionsDict = new Dictionary<T, UnityEvent>();
 
     //Can only subscribe one event per T : Enum
     protected void SubscribeCustomEvent(T eEvent, UnityEvent customEvent)
