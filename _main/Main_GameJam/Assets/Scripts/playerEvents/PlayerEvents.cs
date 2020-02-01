@@ -15,6 +15,8 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     }
 
     [Header("Settings")] public float speed = 100;
+    public int currentNumOfChick = 0;
+    public int repairPoints = 1000;
 
     [Header("Internal")] public Rigidbody rb;
     public Transform shotSpawn;
@@ -69,6 +71,21 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void Refresh()
     {
+        if (currentNumOfChick > 0)
+        {
+            repairPoints -= currentNumOfChick;
+            if (repairPoints <= 0)
+            {
+                Game.Instance.gameState = Game.GameState.EndGame;
+            }
+        }
+        
+        //DEBUG
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Game.Instance.gameState = Game.GameState.EndGame;
+        }
+        
     }
 
     public void PhysicsRefresh()
@@ -92,9 +109,6 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void Move(float horizontal, float vertical)
     {
-        //TODO minimum speed 
-        //TODO maximum speed
-        
         //Block movement if player not really pushing the joystick.
         if ((horizontal < 0.01f && vertical < 0.01f) && (horizontal > -0.01f && vertical > -0.01f))
         {
@@ -141,7 +155,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     public void Die()
     {
         Debug.Log("In Die");
-        Game.Instance.gameState = Game.GameState.EndGame;
+        
     }
 
     public void Dash()
