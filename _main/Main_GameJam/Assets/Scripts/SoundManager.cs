@@ -1,32 +1,74 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class SoundManager : MonoBehaviour
 {
-    private PlayerEvents player;
-
-    public string Sound1 = "SON"; 
-    
     // Start is called before the first frame update
-    void Start()
+    #region Singleton
+    static private SoundManager instance = null;
+    static public SoundManager Instance {
+        get {
+            return instance ?? (instance = new SoundManager());
+        }
+    }
+    #endregion
+    [Serializable]
+    private struct audioFiller
     {
-        player.AddAction(PlayerEvents.Event.DIE, () => { Sound("D"); });
+        public int id;
+        public AudioClip clip;
+    }
+    [SerializeField] private audioFiller[] audioBiblio;
+    public Dictionary<GameObject, AudioSource> audioSource;
+    public Dictionary<int, AudioClip> dicSound;
+
+    private void Awake()
+    {
+        audioSource = new Dictionary<GameObject, AudioSource>();
+        dicSound = new Dictionary<int, AudioClip>();
+        foreach (audioFiller filler in audioBiblio)
+        {
+            dicSound.Add(filler.id, filler.clip);
+        }
+        //audioSource = GameObject.FindObjectsOfType<AudioSource>().ToDictionary(t => t.gameObject, t => t.GetComponent<AudioSource>());
+        //Debug.Log("hh");
+        instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void AddAudioSource(GameObject obj, AudioSource source)
     {
-        
+        audioSource.Add(obj, source);
+    }
+    public void PlayLoopTimed(GameObject audioObj, int clipId, float playTime)
+    {
+        audioSource[audioObj].clip = dicSound[clipId];
+        StartCoroutine(playTimed(audioSource[audioObj], playTime));
     }
 
-    private void Test1()
+    public void PlayOnce(GameObject audioObj, int clipId)
     {
-        
+        audioSource[audioObj].PlayOneShot(dicSound[clipId]);
     }
 
-    private void Sound(string nomDuSon)
+    public void PlayLoop(GameObject audioObj, int clipId)
     {
-        //Jouer son
+        audioSource[audioObj].clip = dicSound[clipId];
+        audioSource[audioObj].loop = true;
+        audioSource[audioObj].Play();
     }
+
+    public void StopSound(GameObject audioObj)
+    {
+        audioSource[audioObj].Stop();
+    }
+    private IEnumerator playTimed(AudioSource source, float playTime)
+    {
+        source.Play();
+        yield return new WaitForSeconds(playTime);
+        source.Stop();
+    }
+    
 }

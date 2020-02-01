@@ -134,7 +134,10 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         animator.SetBool("Run", false);
     }
 
-
+    public void PlayHitSound()
+    {
+        SoundManager.Instance.PlayOnce(gameObject, 0);
+    }
     public void Die()
     {
         Debug.Log("In Die");

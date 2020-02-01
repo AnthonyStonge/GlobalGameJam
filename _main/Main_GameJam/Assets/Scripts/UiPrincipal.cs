@@ -20,6 +20,8 @@ public class UiPrincipal : MonoBehaviour
     private void Start()
     {
         countDownDefaultSize = startText.rectTransform.rect.height;
+        SoundManager.Instance.AddAudioSource(gameObject, GetComponent<AudioSource>());
+        SoundManager.Instance.PlayLoop(gameObject, 0);
     }
 
     public void Refresh()
@@ -43,6 +45,7 @@ public class UiPrincipal : MonoBehaviour
                 startText.text = ((int) timeCountDownBegin + 1).ToString();
                 startText.rectTransform.sizeDelta = new Vector2(startText.rectTransform.rect.width, countDownDefaultSize);
             }
+            SoundManager.Instance.StopSound(gameObject);
             Shrink(5);
         }
         else if (timeCountDownBegin > -1)
@@ -53,6 +56,7 @@ public class UiPrincipal : MonoBehaviour
                 startText.text = "START";
                 startText.rectTransform.sizeDelta = new Vector2(startText.rectTransform.rect.width, countDownDefaultSize);
                 main.StartShake(2f, 0.2f, 0.5f);
+                SoundManager.Instance.PlayLoop(gameObject, 1);
             }
             Shrink(7);
         }
@@ -64,6 +68,7 @@ public class UiPrincipal : MonoBehaviour
                 startText.text = "";
                 Game.Instance.gameState = Game.GameState.InGame;
                 startText.transform.parent.gameObject.SetActive(false);
+                
             }
         }
     }
