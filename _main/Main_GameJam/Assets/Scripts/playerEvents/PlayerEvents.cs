@@ -24,7 +24,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     private Vector2 currentInput;
 
-    private void PreInitialize()
+    public void PreInitialize()
     {
         bulletPrefab = Resources.Load<GameObject>("Prefabs/NotBullet");
 
@@ -83,14 +83,13 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         }
         else
         {
-            //Smooth out movement
             var newDirection = Quaternion.LookRotation(new Vector3(horizontal, 0, vertical)).eulerAngles;
 
             newDirection.x = 0;
             newDirection.z = 0;
             transform.rotation = Quaternion.Euler(newDirection);
             
-            rb.AddForce(transform.forward * speed);
+            rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
         }
     }
 
@@ -107,7 +106,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void Throw()
     {
-        GameObject shot = Instantiate(bulletPrefab, shotSpawn);
+        GameObject shot = Instantiate(bulletPrefab, shotSpawn.position, Quaternion.identity);
         shot.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(100, 0, 0), ForceMode.Force);
         Debug.Log("In Throw");
     }
