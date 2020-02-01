@@ -10,6 +10,7 @@ public class PlayerInputs : MonoBehaviour, IFlow
     [SerializeField] private int playerID;
     [SerializeField] private Player player;
     [SerializeField] public PlayerEvents playerEvents;
+    public bool canShoot = false;
 
     public void PreInitialize()
     {
@@ -25,8 +26,8 @@ public class PlayerInputs : MonoBehaviour, IFlow
         float moveHorizontal = player.GetAxis(0);
         float moveVertical = player.GetAxis(1);
         playerEvents.Move(moveHorizontal,moveVertical);
-
-        if (player.GetButtonDown("Shoot"))
+        
+        if (player.GetButtonDown("Shoot") && canShoot)
         {
             playerEvents.Throw();
         }

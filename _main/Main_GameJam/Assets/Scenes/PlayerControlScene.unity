@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flowState: 0
-  VirtualCamera: {fileID: 0}
+  VirtualCamera: {fileID: 1576353744}
 --- !u!4 &209104277
 Transform:
   m_ObjectHideFlags: 0
@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 1
-  m_FollowOffset: {x: 0, y: 0, z: -10}
+  m_FollowOffset: {x: -674.9561, y: -164.569, z: 1766.4143}
   m_XDamping: 1
   m_YDamping: 1
   m_ZDamping: 1
@@ -464,6 +464,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2553141782693781274, guid: 5e2e8b9c992ddf24f8538c7f534168be,
+        type: 3}
+      propertyPath: main
+      value: 
+      objectReference: {fileID: 209104276}
     - target: {fileID: 2553141782693781277, guid: 5e2e8b9c992ddf24f8538c7f534168be,
         type: 3}
       propertyPath: m_Name
@@ -497,12 +502,12 @@ PrefabInstance:
     - target: {fileID: 2553141783102047867, guid: 5e2e8b9c992ddf24f8538c7f534168be,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeFlow
+      value: ExitGame
       objectReference: {fileID: 0}
     - target: {fileID: 2553141783102047867, guid: 5e2e8b9c992ddf24f8538c7f534168be,
         type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2553141783102047867, guid: 5e2e8b9c992ddf24f8538c7f534168be,
         type: 3}
@@ -528,6 +533,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2553141784109351685, guid: 5e2e8b9c992ddf24f8538c7f534168be,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 209104276}
+    - target: {fileID: 2553141784109351685, guid: 5e2e8b9c992ddf24f8538c7f534168be,
+        type: 3}
+      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ChangeFlow
       objectReference: {fileID: 0}
     - target: {fileID: 2553141784109351691, guid: 5e2e8b9c992ddf24f8538c7f534168be,
         type: 3}
@@ -916,8 +931,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1110965385}
-  m_LocalRotation: {x: 0.058948368, y: -0.18050376, z: 0.010838244, w: 0.98174644}
-  m_LocalPosition: {x: 717.9561, y: 242.569, z: -1885.4143}
+  m_LocalRotation: {x: 0.3033488, y: -0.16915719, z: 0.05481398, w: 0.93614143}
+  m_LocalPosition: {x: 40, y: 81, z: -106}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1330,8 +1345,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1576353743}
-  m_LocalRotation: {x: 0.058948368, y: -0.18050376, z: 0.010838244, w: 0.98174644}
-  m_LocalPosition: {x: 717.9561, y: 242.569, z: -1885.4143}
+  m_LocalRotation: {x: 0.3033488, y: -0.16915719, z: 0.05481398, w: 0.93614143}
+  m_LocalPosition: {x: 40, y: 81, z: -106}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 249536770}

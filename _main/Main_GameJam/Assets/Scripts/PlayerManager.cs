@@ -23,11 +23,13 @@ public class PlayerManager : IFlow
     public PlayerEvents player1Events;
     public PlayerInputs player1Inputs;
     public Vector3 player1Position = new Vector3(-10, 2f, 0);
+    public bool canShoot1;
 
     public GameObject player2;
     public PlayerEvents player2Events;
     public PlayerInputs player2Inputs;
     public Vector3 player2Position = new Vector3(10, 2f, 0);
+    public bool canShoot2;
 
     public void PreInitialize()
     {
@@ -63,6 +65,8 @@ public class PlayerManager : IFlow
 
     public void Refresh()
     {
+        player1Inputs.canShoot = canShoot1;
+        player2Inputs.canShoot = canShoot2;
         player1Inputs.Refresh();
         player2Inputs.Refresh();
         player1Events.Refresh();
