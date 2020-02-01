@@ -29,10 +29,15 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     private Animator animator;
     private Vector2 currentInput;
     private bool isMoving = false;
+    private int AssID;
+    public bool eggCompleted;
+    public int numberEgg;
 
     public void PreInitialize()
     {
         bulletPrefab = Resources.Load<GameObject>("Prefabs/Bullet/Egg");
+        eggCompleted = true;
+        this.numberEgg = 2;
 
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
@@ -142,11 +147,15 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void Throw()
     {
-        Debug.Log("In Throw");
-        GameObject shot = GameObject.Instantiate(bulletPrefab, shotSpawn.position, shotSpawn.rotation);
-        Bullet bullet = shot.GetComponent<Bullet>();
-        bullet.Initialize();
-        bullet.Launch(transform);
+        if (eggCompleted)
+        {
+            GameObject shot = GameObject.Instantiate(bulletPrefab, shotSpawn.position, shotSpawn.rotation);
+            Bullet bullet = shot.GetComponent<Bullet>();
+            bullet.Initialize(AssID);
+            bullet.Launch(transform);
+            eggCompleted = false;
+            this.numberEgg = 0;
+        }
     }
 
 
@@ -161,4 +170,11 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         Vector3 direction = transform.forward * 5;
         Gizmos.DrawRay(transform.position, direction);
     }
+    
+    public void SetAssID(int id)
+    {
+        AssID = id;
+        transform.tag = id.ToString();
+    }
+    
 }
