@@ -58,7 +58,7 @@ public class Game : IFlow
                 playerManager.canShoot2 = false;
                 break;
             case GameState.InGame:
-                playerManager.Refresh();
+                
                 playerManager.canShoot1 = true;
                 playerManager.canShoot2 = true;
                 break;
@@ -68,8 +68,7 @@ public class Game : IFlow
                 uiManager.SetEndGame(true);
                 break;
         }
-        
-   
+        playerManager.Refresh();
         timeManager.Refresh();
     }
 

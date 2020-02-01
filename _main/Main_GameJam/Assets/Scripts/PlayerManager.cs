@@ -57,6 +57,18 @@ public class PlayerManager : IFlow
 
     public void Initialize()
     {
+        Bullet_Half[] ball = GameObject.FindObjectsOfType<Bullet_Half>();
+        foreach (Bullet_Half halfEgg in ball)
+        {
+            GameObject.Destroy(halfEgg.gameObject);
+        }
+
+        player1Events.eggCompleted = true;
+        player2Events.eggCompleted = true;
+        player1Inputs.canShoot = false;
+        player2Inputs.canShoot = false;
+        player1.transform.position = player1Position;
+        player2.transform.position = player2Position;
         player1Inputs.Initialize();
         player2Inputs.Initialize();
         player1Events.Initialize();
