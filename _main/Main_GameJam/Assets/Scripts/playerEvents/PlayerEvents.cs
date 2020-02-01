@@ -32,7 +32,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void PreInitialize()
     {
-        bulletPrefab = Resources.Load<GameObject>("Prefabs/NotBullet");
+        bulletPrefab = Resources.Load<GameObject>("Prefabs/Bullet/Egg");
 
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
@@ -91,7 +91,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         //TODO maximum speed
         
         //Block movement if player not really pushing the joystick.
-        if ((horizontal < 0.05f && vertical < 0.05f) && (horizontal > -0.05f && vertical > -0.05f))
+        if ((horizontal < 0.01f && vertical < 0.01f) && (horizontal > -0.01f && vertical > -0.01f))
         {
             if (isMoving)
             {
@@ -142,9 +142,11 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void Throw()
     {
-        GameObject shot = Instantiate(bulletPrefab, shotSpawn.position, Quaternion.identity);
-        shot.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(100, 0, 0), ForceMode.Force);
         Debug.Log("In Throw");
+        GameObject shot = GameObject.Instantiate(bulletPrefab, shotSpawn.position, shotSpawn.rotation);
+        Bullet bullet = shot.GetComponent<Bullet>();
+        bullet.Initialize();
+        bullet.Launch(transform);
     }
 
 

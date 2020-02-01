@@ -19,6 +19,8 @@ public class Game : IFlow
 
     private PlayerManager playerManager;
     private UiManager uiManager;
+    private TimeManager timeManager;
+    
     public enum GameState
     {
         Start,
@@ -31,8 +33,12 @@ public class Game : IFlow
         gameState = GameState.InGame;
         playerManager = PlayerManager.Instance;
         uiManager = UiManager.Instance;
+        timeManager = TimeManager.Instance;
+        
         playerManager.PreInitialize();
         uiManager.PreInitialize();
+        timeManager.PreInitialize();
+        
     }
 
     public void Initialize()
@@ -56,6 +62,7 @@ public class Game : IFlow
         }
         playerManager.Refresh();
    
+        timeManager.Refresh();
     }
 
     public void PhysicsRefresh()

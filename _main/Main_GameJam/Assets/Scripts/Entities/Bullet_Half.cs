@@ -11,17 +11,6 @@ public class Bullet_Half : MonoBehaviour, IPickable
 
     public float timeBeforeFrozen = 5f;
 
-    private void Awake()
-    {
-        TimeManager.Instance.PreInitialize();
-        //TODO remove line under
-    }
-
-    private void Start()
-    {
-        Initialize();
-    }
-
     private void Update()
     {
         TimeManager.Instance.Refresh();
@@ -30,7 +19,7 @@ public class Bullet_Half : MonoBehaviour, IPickable
     public void Initialize()
     {
         this.rb = GetComponent<Rigidbody>();
-        TimeManager.Instance.AddTimedAction(new TimedAction(() => { this.rb.isKinematic = true; }, this.timeBeforeFrozen));
+        //TimeManager.Instance.AddTimedAction(new TimedAction(() => { this.rb.isKinematic = true; }, this.timeBeforeFrozen));
     }
 
 
