@@ -7,7 +7,7 @@ using Random = System.Random;
 
 public class Bullet : MonoBehaviour
 {
-    public float throwForce = 200;
+    public float throwForce = 300;
     public float explosionForce = 10;
     public float explosionRadius = 2;
     public Vector3 offsetExplosion;
@@ -63,11 +63,12 @@ public class Bullet : MonoBehaviour
             //Check if its my egg
             case "10":
                 if (this.id == 20)
-                    other.transform.GetComponent<PlayerEvents>().Die();
+                    other.transform.GetComponent<PlayerEvents>().OnAction(PlayerEvents.Event.DIE);
+                
                 break;
             case "20":
                 if (this.id == 10)
-                    other.transform.GetComponent<PlayerEvents>().Die();
+                    other.transform.GetComponent<PlayerEvents>().OnAction(PlayerEvents.Event.DIE);
                 break;
         }
 
