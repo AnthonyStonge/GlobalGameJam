@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 266282282447798307}
   - component: {fileID: 6625891721047147466}
-  - component: {fileID: 266282282447798305}
   - component: {fileID: 266282282447798317}
   - component: {fileID: 266282282447798316}
   - component: {fileID: 266282282447798318}
   - component: {fileID: 266282282447798319}
+  - component: {fileID: 4041768597971456418}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -56,18 +56,7 @@ MonoBehaviour:
   speed: 100
   rb: {fileID: 266282282447798316}
   playerID: 0
---- !u!114 &266282282447798305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 266282282447798315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b22da99c8e11de543a98190087f67b9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  playerEvents: {fileID: 4041768597971456418}
 --- !u!65 &266282282447798317
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -144,3 +133,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 266282282447798315}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &4041768597971456418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266282282447798315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13bfc8a5158a31746adf072ce9e6965f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDash:
+    m_PersistentCalls:
+      m_Calls: []
+  onDie:
+    m_PersistentCalls:
+      m_Calls: []
+  onThrow:
+    m_PersistentCalls:
+      m_Calls: []
