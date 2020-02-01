@@ -31,13 +31,14 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     [SerializeField] private CustomEvent onStopMoving;
     [SerializeField] private VisualEffect footStepLeft;
     [SerializeField] private VisualEffect footStepRight;
+    [SerializeField] private float delayToShoot;
 
     private Animator animator;
     private Vector2 currentInput;
     private bool isMoving = false;
     private int AssID;
-    public bool eggCompleted;
-    public int numberEgg;
+    [HideInInspector] public bool eggCompleted;
+    [HideInInspector] public int numberEgg;
 
     public void PreInitialize()
     {
@@ -144,6 +145,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     {
         this.footStepLeft.Play();
     }
+
     public void Foot_Step_Right()
     {
         this.footStepRight.Play();
@@ -153,6 +155,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     {
         SoundManager.Instance.PlayOnce(gameObject, 0);
     }
+
     public void Die()
     {
         Debug.Log("In Die");
@@ -169,13 +172,19 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     {
         if (eggCompleted)
         {
-            GameObject shot = GameObject.Instantiate(bulletPrefab, shotSpawn.position, shotSpawn.rotation);
-            Bullet bullet = shot.GetComponent<Bullet>();
-            bullet.Initialize(AssID);
-            bullet.Launch(transform);
-            eggCompleted = false;
-            this.numberEgg = 0;
+            animator.SetTrigger("Throw");
+            TimeManager.Instance.AddTimedAction(new TimedAction(SpawnBullet, this.delayToShoot));
         }
+    }
+
+    private void SpawnBullet()
+    {
+        GameObject shot = GameObject.Instantiate(bulletPrefab, shotSpawn.position, shotSpawn.rotation);
+        Bullet bullet = shot.GetComponent<Bullet>();
+        bullet.Initialize(AssID);
+        bullet.Launch(transform);
+        eggCompleted = false;
+        this.numberEgg = 0;
     }
 
     public void OnDrawGizmos()
