@@ -195,6 +195,10 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     public void Die()
     {
         Debug.Log("In Die");
+        animator.SetTrigger("Die");
+        TimeManager.Instance.AddTimedAction(new TimedAction(
+            () => { StartCoroutine(Dissolve(300));}
+            , 2));
     }
 
     public void Dash()
@@ -227,6 +231,24 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         bullet.Launch(transform);
         eggCompleted = false;
         this.numberEgg = 0;
+    }
+    
+    private IEnumerator Dissolve(float TransitionTime)
+    {
+        float ElapsedTime = 0.0f;
+        float accumulateur = 0;
+        while (ElapsedTime < TransitionTime)
+        {
+            accumulateur += (1 / TransitionTime) * Time.deltaTime;
+            ElapsedTime += Time.deltaTime;
+
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            {
+                renderer.material.SetFloat("_DissolveValue",  renderer.material.GetFloat("_DissolveValue") + accumulateur);
+            }
+            yield return null;
+        }
+        yield return new WaitForEndOfFrame();
     }
 
     public void OnDrawGizmos()
