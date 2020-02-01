@@ -162,12 +162,6 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         }
     }
 
-
-    void IFlow.PreInitialize()
-    {
-        PreInitialize();
-    }
-
     public void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
