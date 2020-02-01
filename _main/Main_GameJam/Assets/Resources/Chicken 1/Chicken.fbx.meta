@@ -6,11 +6,12 @@ ModelImporter:
   - first:
       74: -8945691123924629249
     second: Armature|Idle
-      74: -3828583913261678786
-    second: Armature|Running
   - first:
       74: -7453387558714718212
     second: Armature|Shoot
+  - first:
+      74: -3828583913261678786
+    second: Armature|Running
   externalObjects: {}
   materials:
     materialImportMode: 1
