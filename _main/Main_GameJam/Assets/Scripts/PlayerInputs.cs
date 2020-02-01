@@ -6,18 +6,14 @@ using UnityEngine.Serialization;
 
 public class PlayerInputs : MonoBehaviour, IFlow
 {
-
-
     [Header("Internal")]
     [SerializeField] private int playerID;
     [SerializeField] private Player player;
     [SerializeField] public PlayerEvents playerEvents;
 
-
     public void PreInitialize()
     {
         player = ReInput.players.GetPlayer(playerID);
-
     }
 
     public void Initialize()
@@ -33,10 +29,7 @@ public class PlayerInputs : MonoBehaviour, IFlow
         if (player.GetButtonDown("Shoot"))
         {
             playerEvents.Throw();
-            
-            Debug.Log("Shooting");
         }
-
     }
 
     public void PhysicsRefresh()
