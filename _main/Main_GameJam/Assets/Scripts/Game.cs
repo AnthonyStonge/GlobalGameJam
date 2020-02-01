@@ -57,12 +57,13 @@ public class Game : IFlow
                
                 break;
             case GameState.InGame:
+                playerManager.Refresh();
                 break;
             case  GameState.EndGame:
                 uiManager.SetEndGame(true);
                 break;
         }
-        playerManager.Refresh();
+        
    
         timeManager.Refresh();
     }
