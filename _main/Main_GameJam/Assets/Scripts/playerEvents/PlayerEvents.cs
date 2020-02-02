@@ -36,6 +36,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     //[SerializeField] private VisualEffect footStepLeft;
     [SerializeField] private VisualEffect footStepRight;
     [SerializeField] private float delayToShoot;
+    [SerializeField] private SkinnedMeshRenderer HighlightMaterial;
 
     public VisualEffect plumePOWER;
     public Chick chick;
@@ -62,20 +63,18 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     private GameObject actualCannonPrefab;
     private GameObject stepsParticuleSystem;
     public VisualEffect deathVisual;
-    private SkinnedMeshRenderer[] skinnedMeshArray;
 
     private float factor;
     public void PreInitialize()
     {
         float intensity = 2;
         factor = Mathf.Pow(2, intensity);
-        
+
         chick = Resources.Load<Chick>("Player/Chick/Chick");
         bulletPrefab = Resources.Load<GameObject>("Prefabs/Bullet/Egg");
         this.stepsParticuleSystem = Resources.Load<GameObject>("VFX/Steps");
 
-        skinnedMeshArray = GetComponentsInChildren<SkinnedMeshRenderer>();
-        
+
         chickAnimator = chick.GetComponent<Animator>();
 
         eggCompleted = true;
@@ -108,7 +107,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         AddAction(Event.STOP_MOVING, StopMoving);
         AddAction(Event.FOOT_STEP_LEFT, Foot_Step_Left);
         AddAction(Event.FOOT_STEP_RIGHT, Foot_Step_Right);
-        
+
         PlayerGlow();
     }
 
@@ -117,7 +116,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         LoadCannonPrefab();
         this.actuallyTheCannonPosition1 = GameObject.Instantiate(this.actuallyTheCannonPosition1);
         this.actuallyTheCannonPosition2 = GameObject.Instantiate(this.actuallyTheCannonPosition2);
-        
+
         if (this.AssID == 10)
             this.actuallyTheCannonPosition = this.actuallyTheCannonPosition1;
         else
@@ -167,21 +166,21 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void PlayerGlow()
     {
-        foreach (var i in skinnedMeshArray)
+        if (HighlightMaterial)
         {
-            Color col = i.material.color;
+            Color col = HighlightMaterial.material.color;
             Color color = new Color(col.r * factor, col.g * factor, col.b * factor);
-            i.material.color = color;
+            HighlightMaterial.material.color = color;
         }
     }
 
     public void PlayerShootingGlow()
     {
-        foreach (var i in skinnedMeshArray)
+        if (HighlightMaterial)
         {
-            Color col = i.material.color;
+            Color col = HighlightMaterial.material.color;
             Color color = new Color(col.r / factor, col.g / factor, col.b / factor);
-            i.material.color = color;
+            HighlightMaterial.material.color = color;
         }
     }
 
@@ -292,9 +291,9 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     public void Foot_Step_Right()
     {
         //this.footStepRight.Play();
-       // GameObject thatShitIsGoingDown = Instantiate(this.stepsParticuleSystem, footStepRight.transform.position, Quaternion.identity);
+        // GameObject thatShitIsGoingDown = Instantiate(this.stepsParticuleSystem, footStepRight.transform.position, Quaternion.identity);
         //thatShitIsGoingDown.GetComponent<VisualEffect>().Play();
-       // Destroy(thatShitIsGoingDown, 3f);
+        // Destroy(thatShitIsGoingDown, 3f);
     }
 
     public void PlayHitSound()
@@ -309,10 +308,10 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         Debug.Log("In Die");
         animator.SetTrigger("Die");
 
-        GameObject LOL = Instantiate(deathVisual.gameObject, deathVisual.transform.position, Quaternion.identity,null);
+        GameObject LOL = Instantiate(deathVisual.gameObject, deathVisual.transform.position, Quaternion.identity, null);
         LOL.transform.localScale = transform.localScale;
         Destroy(LOL, 2.5f);
-        
+
         TimeManager.Instance.AddTimedAction(new TimedAction(
             () => { StartCoroutine(Dissolve(3)); }
             , 2));
@@ -345,12 +344,12 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         Bullet bullet = shot.GetComponent<Bullet>();
         bullet.Initialize(AssID);
         bullet.Launch(transform);
-        
-        GameObject LOL = Instantiate(plumePOWER.gameObject, plumePOWER.transform.position, Quaternion.identity,null);
+
+        GameObject LOL = Instantiate(plumePOWER.gameObject, plumePOWER.transform.position, Quaternion.identity, null);
         LOL.transform.up = -transform.forward;
         LOL.transform.localScale = transform.localScale;
         Destroy(LOL, 1.5f);
-        
+
         eggCompleted = false;
         this.numberEgg = 0;
     }
@@ -430,7 +429,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         }
         else
         {
-            
+
             if (AssID == 0)
             {
                 Game.Instance.playerOneWin = true;

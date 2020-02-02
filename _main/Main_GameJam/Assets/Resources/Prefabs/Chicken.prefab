@@ -372,6 +372,7 @@ MonoBehaviour:
       m_Calls: []
   footStepRight: {fileID: 7345290797908767276}
   delayToShoot: 0.2
+  HighlightMaterial: {fileID: 7844191877371089065}
   plumePOWER: {fileID: 8195720882201791517}
   chick: {fileID: 7770011329391472684, guid: 7772bccb998cfef4faeb4e528991468f, type: 3}
   canShoot: 1
