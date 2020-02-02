@@ -22,14 +22,14 @@ public class PlayerManager : IFlow
     public GameObject player1;
     public PlayerEvents player1Events;
     public PlayerInputs player1Inputs;
-    public Vector3 player1Position = new Vector3(408, 133, 626);
+    public Vector3 player1Position = new Vector3(254, 134, 404);
     public bool canShoot1;
 
 
     public GameObject player2;
     public PlayerEvents player2Events;
     public PlayerInputs player2Inputs;
-    public Vector3 player2Position = new Vector3(418, 133, 626);
+    public Vector3 player2Position = new Vector3(254, 134, 423);
     public bool canShoot2;
 
     public List<Chick> chicksssss;
@@ -39,9 +39,10 @@ public class PlayerManager : IFlow
         this.chicksssss = new List<Chick>();
 
         player1 = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Chicken"), player1Position,
-            Quaternion.identity);
+            Quaternion.Euler(0, 90, 0));
         player2 = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Chicken"), player2Position,
-            Quaternion.identity);
+            Quaternion.Euler(0, 90, 0));
+        
 
         player1Inputs = player1.GetComponent<PlayerInputs>();
         player2Inputs = player2.GetComponent<PlayerInputs>();
