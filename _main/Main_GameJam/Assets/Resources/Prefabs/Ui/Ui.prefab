@@ -238,8 +238,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -496,12 +496,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfChoiceInMenu: 2
-  choiceOn: 0
+  selectedChoice: 0
   main: {fileID: 0}
   startText: {fileID: 2553141783136922531}
   endText: {fileID: 2553141784281491631}
   menuPanel: {fileID: 2553141782409652905}
   gameUi: {fileID: 2553141783516091309}
+  mainEntry: {fileID: 0}
+  choiceMenu:
+  - {fileID: 2553141784109351691}
+  - {fileID: 2553141783102047864}
   timeCountDownBegin: -1
 --- !u!82 &5201003555898079952
 AudioSource:
@@ -871,7 +875,7 @@ MonoBehaviour:
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: 
+            m_StringArgument: Game
             m_BoolArgument: 0
           m_CallState: 1
   - eventID: 0
@@ -888,7 +892,7 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
-          m_CallState: 2
+          m_CallState: 1
   - eventID: 1
     callback:
       m_PersistentCalls:
@@ -903,7 +907,7 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
-          m_CallState: 2
+          m_CallState: 1
 --- !u!1 &2553141783107246689
 GameObject:
   m_ObjectHideFlags: 0
@@ -1625,7 +1629,7 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: Game
             m_BoolArgument: 0
-          m_CallState: 2
+          m_CallState: 1
   - eventID: 0
     callback:
       m_PersistentCalls:
@@ -1640,7 +1644,7 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: Game
             m_BoolArgument: 0
-          m_CallState: 2
+          m_CallState: 1
   - eventID: 1
     callback:
       m_PersistentCalls:
@@ -1655,7 +1659,7 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: Game
             m_BoolArgument: 0
-          m_CallState: 2
+          m_CallState: 1
 --- !u!114 &2553141784109351686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1920,8 +1924,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

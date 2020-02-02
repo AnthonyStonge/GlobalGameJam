@@ -21,6 +21,6 @@ public class UiChangeColor : MonoBehaviour
     }
     public void ChangeColorSelected()
     {
-        GetComponent<TextMeshProUGUI>().color = colorOnExit;
+        GetComponent<TextMeshProUGUI>().color = colorOnSelected;
     }
 }

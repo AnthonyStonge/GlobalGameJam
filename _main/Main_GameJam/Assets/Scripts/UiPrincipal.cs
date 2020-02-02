@@ -8,12 +8,14 @@ public class UiPrincipal : MonoBehaviour
 {
     // Start is called before the first frame update
     public int numberOfChoiceInMenu = 2;
-    public int choiceOn = 0;
+    public int selectedChoice = 0;
     public Main main;
     public TextMeshProUGUI startText;
     public TextMeshProUGUI endText;
     public GameObject menuPanel;
     public GameObject gameUi;
+    public Main mainEntry;
+    [SerializeField] private List<TextMeshProUGUI> choiceMenu;
     private float countDownDefaultSize;
     [HideInInspector]public float timeCountDownBegin = -1;
 
@@ -24,15 +26,30 @@ public class UiPrincipal : MonoBehaviour
         SoundManager.Instance.PlayLoop(gameObject, 0);
     }
 
-    public void Refresh()
+    public void Update()
     {
-        if (timeCountDownBegin == -1)
+        if (timeCountDownBegin != -1)
         {
+            //CountDown();
+        }
+
+        if (main.flowState == Main.FlowState.Menu)
+        {
+            for (int i = 0; i < choiceMenu.Count; i++)
+            {
+                if (i == selectedChoice)
+                {
+                    choiceMenu[selectedChoice].GetComponent<UiChangeColor>().ChangeColorEnter();
+                }
+                else
+                {
+                    choiceMenu[selectedChoice].GetComponent<UiChangeColor>().ChangeColorExit();
+                }
+            }
+            
             
         }
-        else
-            CountDown();
-        
+
     }
     public void CountDown()
     {
