@@ -151,12 +151,13 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         if (this.AssID == 10)
         {
             this.cannonPosition.Add(new Vector3(254, 133, 533));
-            this.HighlightMaterial.material = Resources.Load<Material>("Material/EggPlayer_1");
+            this.HighlightMaterial.material.color = Color.magenta;
         }
         else
         {
             this.cannonPosition.Add(new Vector3(254, 133, 341));
-            this.HighlightMaterial.material = Resources.Load<Material>("Material/EggPlayer_2");
+            this.HighlightMaterial.material.color = Color.green;
+            
         }
     }
 

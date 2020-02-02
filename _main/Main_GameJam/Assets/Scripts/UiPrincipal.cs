@@ -72,6 +72,7 @@ public class UiPrincipal : MonoBehaviour
             timeCountDownBegin -= Time.deltaTime;
             if (startText.text != "START")
             {
+                //startText.fontSize -= 10;
                 startText.text = "START";
                 startText.rectTransform.sizeDelta = new Vector2(startText.rectTransform.rect.width, countDownDefaultSize);
                 main.StartShake(2f, 0.2f, 0.5f);
