@@ -39,6 +39,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     [SerializeField] private SkinnedMeshRenderer HighlightMaterial;
 
     public VisualEffect plumePOWER;
+    public VisualEffect smokeCANCER;
     public Chick chick;
     private Animator chickAnimator;
     private Animator animator;
@@ -237,8 +238,11 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         if (nextCannonPosition == this.cannonPosition.Count)
             nextCannonPosition = 0;
         chicky.SetCannonPosition(this.cannonPosition[nextCannonPosition++]);
+
+
         PlayerManager.Instance.chicksssss.Add(chicky);
         SwapCannonPrefab();
+
     }
 
     public void Move(float horizontal, float vertical)
@@ -314,7 +318,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
         TimeManager.Instance.AddTimedAction(new TimedAction(
             () => { StartCoroutine(Dissolve(3)); }
-            , 2));
+            , .5f));
     }
 
     public void Dash()
@@ -344,8 +348,9 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         Bullet bullet = shot.GetComponent<Bullet>();
         bullet.Initialize(AssID);
         bullet.Launch(transform);
-
+        
         GameObject LOL = Instantiate(plumePOWER.gameObject, plumePOWER.transform.position, Quaternion.identity, null);
+        LOL.SetActive(true);
         LOL.transform.up = -transform.forward;
         LOL.transform.localScale = transform.localScale;
         Destroy(LOL, 1.5f);
