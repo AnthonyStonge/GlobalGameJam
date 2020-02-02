@@ -41,6 +41,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     [SerializeField] private SkinnedMeshRenderer HighlightMaterial;
 
     public VisualEffect plumePOWER;
+    public VisualEffect smokeCANCER;
     public Chick chick;
     private Animator chickAnimator;
     private Animator animator;
@@ -234,6 +235,11 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     {
         currentRepairPoints = initialRepairPoints;
         currentNumOfChick = 0;
+        foreach (var i in PlayerManager.Instance.chicksssss)
+        {
+            Destroy(i.gameObject);
+        }
+        PlayerManager.Instance.chicksssss.Clear();
     }
 
     public void SmackThatChick()
@@ -254,6 +260,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
         if (nextCannonPosition == this.cannonPosition.Count)
             nextCannonPosition = 0;
+
         if (AssID == 10)
         {
             //chicky.transform.LookAt(lookAt1);
@@ -270,6 +277,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
         PlayerManager.Instance.chicksssss.Add(chicky);
         SwapCannonPrefab();
+
     }
 
     public void Move(float horizontal, float vertical)
@@ -336,16 +344,18 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     {
         hasControl = false;
         isDead = true;
-        Debug.Log("In Die");
+        //Debug.Log("In Die");
         animator.SetTrigger("Die");
         SoundManager.Instance.PlayOnce(gameObject, 3);
+        gameObject.tag = "IRON ASS";
+        Main.Instance.StartShake(2f, 0.2f, 0.5f);
         GameObject LOL = Instantiate(deathVisual.gameObject, deathVisual.transform.position, Quaternion.identity, null);
         LOL.transform.localScale = transform.localScale;
         Destroy(LOL, 2.5f);
 
         TimeManager.Instance.AddTimedAction(new TimedAction(
             () => { StartCoroutine(Dissolve(3)); }
-            , 2));
+            , .5f));
     }
 
     public void Dash()
@@ -375,8 +385,9 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         Bullet bullet = shot.GetComponent<Bullet>();
         bullet.Initialize(AssID);
         bullet.Launch(transform);
-
+        
         GameObject LOL = Instantiate(plumePOWER.gameObject, plumePOWER.transform.position, Quaternion.identity, null);
+        LOL.SetActive(true);
         LOL.transform.up = -transform.forward;
         LOL.transform.localScale = transform.localScale;
         Destroy(LOL, 1.5f);
@@ -439,7 +450,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     {
         transform.position = this.spawnPosition[Random.Range(0, this.spawnPosition.Count - 1)];
         animator.SetTrigger("Respawn");
-        gameObject.tag = "IRON ASS";
+        
 
         TimeManager.Instance.AddTimedAction(new TimedAction(
             () => { StartCoroutine(Resolve(3)); }, 2f
