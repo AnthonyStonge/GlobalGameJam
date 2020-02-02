@@ -19,9 +19,9 @@ MonoBehaviour:
   uiBounds:
     serializedVersion: 2
     x: 942
-    y: -87
+    y: 175
     width: 1431
-    height: 2036
+    height: 1774
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -44,6 +44,7 @@ MonoBehaviour:
   - {fileID: 8926484042661614769}
   - {fileID: 8926484042661614775}
   - {fileID: 8926484042661614787}
+  - {fileID: 8926484042661614826}
   m_UIPosition: {x: 0, y: 0}
   m_UICollapsed: 1
   m_UISuperCollapsed: 0
@@ -2082,7 +2083,7 @@ VisualEffectResource:
         - m_ExpressionIndex: 34
           m_Value: 100
         - m_ExpressionIndex: 36
-          m_Value: 0.4
+          m_Value: 4
         - m_ExpressionIndex: 39
           m_Value: -0.05
         - m_ExpressionIndex: 40
@@ -2098,11 +2099,11 @@ VisualEffectResource:
         - m_ExpressionIndex: 53
           m_Value: -0.21
         - m_ExpressionIndex: 54
-          m_Value: -0.05
+          m_Value: -0.5
         - m_ExpressionIndex: 55
           m_Value: 0
         - m_ExpressionIndex: 56
-          m_Value: 0.5
+          m_Value: 5
         - m_ExpressionIndex: 57
           m_Value: 0
         - m_ExpressionIndex: 58
@@ -2116,11 +2117,11 @@ VisualEffectResource:
         - m_ExpressionIndex: 62
           m_Value: 0
         - m_ExpressionIndex: 63
-          m_Value: 1.5
+          m_Value: 15
         - m_ExpressionIndex: 64
           m_Value: 0
         - m_ExpressionIndex: 66
-          m_Value: -0.21
+          m_Value: -2.1
         - m_ExpressionIndex: 68
           m_Value: 5
         - m_ExpressionIndex: 70
@@ -2130,7 +2131,7 @@ VisualEffectResource:
         - m_ExpressionIndex: 72
           m_Value: 8
         - m_ExpressionIndex: 73
-          m_Value: 1
+          m_Value: 10
         - m_ExpressionIndex: 74
           m_Value: 0
         - m_ExpressionIndex: 75
@@ -2208,6 +2209,15 @@ VisualEffectResource:
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
+              time: 0.38193017
+              value: 0.0591017
+              inSlope: 0
+              outSlope: 0
+              tangentMode: 34
+              weightedMode: 0
+              inWeight: 0
+              outWeight: 0
+            - serializedVersion: 3
               time: 0.9957983
               value: 0.0591017
               inSlope: 0
@@ -2233,8 +2243,8 @@ VisualEffectResource:
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
-              time: 0.8761217
-              value: 5.6549764
+              time: 0.4943045
+              value: 120.01905
               inSlope: 0.25589323
               outSlope: 0.25589323
               tangentMode: 0
@@ -2242,8 +2252,8 @@ VisualEffectResource:
               inWeight: 0
               outWeight: 0
             - serializedVersion: 3
-              time: 3.072946
-              value: 5.5221343
+              time: 0.6673522
+              value: 0.9950657
               inSlope: -0.44469362
               outSlope: -0.44469362
               tangentMode: 0
@@ -2327,7 +2337,7 @@ VisualEffectResource:
         - m_ExpressionIndex: 51
           m_Value:
             serializedVersion: 2
-            key0: {r: 0, g: 0, b: 0, a: 0}
+            key0: {r: 1, g: 1, b: 1, a: 0}
             key1: {r: 0.000011488971, g: 0.000011488971, b: 0.000011488971, a: 1}
             key2: {r: 1, g: 1, b: 1, a: 1}
             key3: {r: 0, g: 0, b: 0, a: 0}
@@ -2335,7 +2345,7 @@ VisualEffectResource:
             key5: {r: 0, g: 0, b: 0, a: 0}
             key6: {r: 0, g: 0, b: 0, a: 0}
             key7: {r: 0, g: 0, b: 0, a: 0}
-            ctime0: 5783
+            ctime0: 13300
             ctime1: 58982
             ctime2: 65535
             ctime3: 0
@@ -2525,7 +2535,7 @@ VisualEffectResource:
         data: 00000000
     m_Events:
     - name: OnPlay
-      playSystems: 0000000001000000
+      playSystems: 000000000100000001000000
       stopSystems: 
     - name: OnStop
       playSystems: 
@@ -2793,7 +2803,9 @@ MonoBehaviour:
   m_Label: 
   m_Data: {fileID: 0}
   m_InputFlowSlot:
-  - link: []
+  - link:
+    - context: {fileID: 8926484042661614826}
+      slotIndex: 0
   - link: []
   m_OutputFlowSlot:
   - link:
@@ -3956,7 +3968,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.AnimationCurve, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"frames":[{"time":0.007413685321807861,"value":4.210085868835449,"inTangent":2.0,"outTangent":2.0,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.8761216998100281,"value":5.6549763679504398,"inTangent":0.2558932304382324,"outTangent":0.2558932304382324,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":3.072946071624756,"value":5.522134304046631,"inTangent":-0.4446936249732971,"outTangent":-0.4446936249732971,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":4.39797830581665,"value":0.6688666343688965,"inTangent":-1.4185608625411988,"outTangent":-1.4185608625411988,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
+      m_SerializableObject: '{"frames":[{"time":0.007413685321807861,"value":4.210085868835449,"inTangent":2.0,"outTangent":2.0,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.49430450797080996,"value":120.01905059814453,"inTangent":0.2558932304382324,"outTangent":0.2558932304382324,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":0.6673521995544434,"value":0.9950656890869141,"inTangent":-0.4446936249732971,"outTangent":-0.4446936249732971,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false},{"time":4.39797830581665,"value":0.6688666343688965,"inTangent":-1.4185608625411988,"outTangent":-1.4185608625411988,"tangentMode":0,"leftTangentMode":0,"rightTangentMode":0,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
     m_Space: 2147483647
   m_Property:
     name: Size
@@ -4018,7 +4030,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":0.0,"g":0.0,"b":0.0,"a":1.0},"time":0.08824292570352555},{"color":{"r":0.000011488970812933985,"g":0.000011488970812933985,"b":0.000011488970812933985,"a":1.0},"time":0.9000076055526733},{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0,"time":0.0},{"alpha":1.0,"time":0.20000000298023225},{"alpha":1.0,"time":0.929411768913269},{"alpha":0.0,"time":1.0}],"gradientMode":0}'
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":0.20294499397277833},{"color":{"r":0.000011488970812933985,"g":0.000011488970812933985,"b":0.000011488970812933985,"a":1.0},"time":0.9000076055526733},{"color":{"r":1.0,"g":1.0,"b":1.0,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0,"time":0.0},{"alpha":1.0,"time":0.20000000298023225},{"alpha":1.0,"time":0.929411768913269},{"alpha":0.0,"time":1.0}],"gradientMode":0}'
     m_Space: 2147483647
   m_Property:
     name: Color
@@ -4652,7 +4664,7 @@ MonoBehaviour:
   m_UICollapsed: 0
   m_UISuperCollapsed: 0
   m_InputSlots:
-  - {fileID: 8926484042661614813}
+  - {fileID: 8926484042661614828}
   - {fileID: 8926484042661614776}
   - {fileID: 8926484042661614779}
   - {fileID: 8926484042661614780}
@@ -4948,7 +4960,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEngine.AnimationCurve, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"frames":[{"time":-0.004201710224151611,"value":0.05910170078277588,"inTangent":0.0,"outTangent":0.0,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false},{"time":0.9957982897758484,"value":0.05910170078277588,"inTangent":0.0,"outTangent":0.0,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
+      m_SerializableObject: '{"frames":[{"time":-0.004201710224151611,"value":0.05910170078277588,"inTangent":0.0,"outTangent":0.0,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false},{"time":0.3819301724433899,"value":0.05910170078277588,"inTangent":0.0,"outTangent":0.0,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false},{"time":0.9957982897758484,"value":0.05910170078277588,"inTangent":0.0,"outTangent":0.0,"tangentMode":0,"leftTangentMode":1,"rightTangentMode":1,"broken":false}],"preWrapMode":8,"postWrapMode":8,"version":1}'
     m_Space: 2147483647
   m_Property:
     name: Size
@@ -5456,7 +5468,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"vector":{"x":-0.05000000074505806,"y":0.5,"z":-0.20999999344348908}}'
+      m_SerializableObject: '{"vector":{"x":-0.5,"y":5.0,"z":-2.0999999046325685}}'
     m_Space: 0
   m_Property:
     name: A
@@ -5638,7 +5650,7 @@ MonoBehaviour:
       m_Type:
         m_SerializableType: UnityEditor.VFX.Vector, Unity.VisualEffectGraph.Editor,
           Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"vector":{"x":1.0,"y":1.5,"z":0.4000000059604645}}'
+      m_SerializableObject: '{"vector":{"x":10.0,"y":15.0,"z":4.0}}'
     m_Space: 0
   m_Property:
     name: B
@@ -5900,46 +5912,6 @@ MonoBehaviour:
       m_Max: Infinity
       m_Tooltip: "Indicates how long the particle can stay alive. If the particle\u2019s
         age exceeds its lifetime, the particle is destroyed."
-      m_Regex: 
-      m_RegexMaxLength: 0
-  m_Direction: 0
-  m_LinkedSlots: []
---- !u!114 &8926484042661614813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76f778ff57c4e8145b9681fe3268d8e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 0}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  m_MasterSlot: {fileID: 8926484042661614813}
-  m_MasterData:
-    m_Owner: {fileID: 8926484042661614775}
-    m_Value:
-      m_Type:
-        m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null
-      m_SerializableObject: '{"colorKeys":[{"color":{"r":0.0,"g":0.0,"b":0.0,"a":1.0},"time":0.0},{"color":{"r":0.75,"g":0.15000000596046449,"b":0.0,"a":1.0},"time":0.3000076413154602},{"color":{"r":1.25,"g":0.5600000023841858,"b":0.11999999731779099,"a":1.0},"time":0.5000076293945313},{"color":{"r":3.5,"g":2.0,"b":0.5,"a":1.0},"time":0.7000076174736023},{"color":{"r":4.0,"g":3.5,"b":1.2000000476837159,"a":1.0},"time":0.9000076055526733},{"color":{"r":12.0,"g":10.0,"b":2.5,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0,"time":0.0},{"alpha":1.0,"time":1.0}],"gradientMode":0}'
-    m_Space: 2147483647
-  m_Property:
-    name: gradient
-    m_serializedType:
-      m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-    attributes:
-    - m_Type: 3
-      m_Min: -Infinity
-      m_Max: Infinity
-      m_Tooltip: The gradient used to sample color
       m_Regex: 
       m_RegexMaxLength: 0
   m_Direction: 0
@@ -6375,6 +6347,74 @@ MonoBehaviour:
       m_Max: Infinity
       m_Tooltip: Sets the frame rate of the flipbook from a curve sampled over its
         lifetime.
+      m_Regex: 
+      m_RegexMaxLength: 0
+  m_Direction: 0
+  m_LinkedSlots: []
+--- !u!114 &8926484042661614826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2461f61b3c026d54db1951a4e17ab20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 114350483966674976}
+  m_Children: []
+  m_UIPosition: {x: 1454, y: 1337}
+  m_UICollapsed: 0
+  m_UISuperCollapsed: 0
+  m_InputSlots: []
+  m_OutputSlots: []
+  m_Label: 
+  m_Data: {fileID: 0}
+  m_InputFlowSlot:
+  - link: []
+  m_OutputFlowSlot:
+  - link:
+    - context: {fileID: 8926484042661614555}
+      slotIndex: 0
+  eventName: OnPlay
+--- !u!114 &8926484042661614828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76f778ff57c4e8145b9681fe3268d8e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parent: {fileID: 0}
+  m_Children: []
+  m_UIPosition: {x: 0, y: 0}
+  m_UICollapsed: 1
+  m_UISuperCollapsed: 0
+  m_MasterSlot: {fileID: 8926484042661614828}
+  m_MasterData:
+    m_Owner: {fileID: 8926484042661614775}
+    m_Value:
+      m_Type:
+        m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      m_SerializableObject: '{"colorKeys":[{"color":{"r":0.0,"g":0.0,"b":0.0,"a":1.0},"time":0.0},{"color":{"r":0.75,"g":0.15000000596046449,"b":0.0,"a":1.0},"time":0.3000076413154602},{"color":{"r":1.25,"g":0.5600000023841858,"b":0.11999999731779099,"a":1.0},"time":0.5000076293945313},{"color":{"r":3.5,"g":2.0,"b":0.5,"a":1.0},"time":0.7000076174736023},{"color":{"r":4.0,"g":3.5,"b":1.2000000476837159,"a":1.0},"time":0.9000076055526733},{"color":{"r":12.0,"g":10.0,"b":2.5,"a":1.0},"time":1.0}],"alphaKeys":[{"alpha":0.0,"time":0.0},{"alpha":1.0,"time":1.0}],"gradientMode":0}'
+    m_Space: 2147483647
+  m_Property:
+    name: gradient
+    m_serializedType:
+      m_SerializableType: UnityEngine.Gradient, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    attributes:
+    - m_Type: 3
+      m_Min: -Infinity
+      m_Max: Infinity
+      m_Tooltip: The gradient used to sample color
       m_Regex: 
       m_RegexMaxLength: 0
   m_Direction: 0

@@ -69,16 +69,16 @@ public class PlayerManager : IFlow
             GameObject.Destroy(halfEgg.gameObject);
         }
 
-        player1.transform.eulerAngles = Vector3.zero;
-        player2.transform.eulerAngles = Vector3.zero;
+        player1.transform.rotation = Quaternion.Euler(0, 90, 0);
+        player2.transform.rotation = Quaternion.Euler(0, 90, 0);
 
         player1Events.eggCompleted = true;
         player2Events.eggCompleted = true;
         player1Inputs.canShoot = false;
         player2Inputs.canShoot = false;
 
-        player1.transform.position = player1Position;
-        player2.transform.position = player2Position;
+        player1.transform.position = player2Position;
+        player2.transform.position = player1Position;
 
         player1Inputs.Initialize();
         player2Inputs.Initialize();
