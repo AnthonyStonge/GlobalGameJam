@@ -22,14 +22,14 @@ public class PlayerManager : IFlow
     public GameObject player1;
     public PlayerEvents player1Events;
     public PlayerInputs player1Inputs;
-    public Vector3 player1Position = new Vector3(-10, 1f, 0);
+    public Vector3 player1Position = new Vector3(408, 133, 626);
     public bool canShoot1;
 
 
     public GameObject player2;
     public PlayerEvents player2Events;
     public PlayerInputs player2Inputs;
-    public Vector3 player2Position = new Vector3(10, 1f, 0);
+    public Vector3 player2Position = new Vector3(418, 133, 626);
     public bool canShoot2;
 
     public List<Chick> chicksssss;

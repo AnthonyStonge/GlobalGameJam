@@ -187,7 +187,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
                     isMoving = true;
                 }
 
-                var newDirection = Quaternion.LookRotation(new Vector3(horizontal, 0, vertical)).eulerAngles;
+                var newDirection = Quaternion.LookRotation(new Vector3(-vertical, 0,horizontal )).eulerAngles;
 
                 newDirection.x = 0;
                 newDirection.z = 0;
