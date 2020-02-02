@@ -374,8 +374,26 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         GameObject.Destroy(this.actualCannonPrefab);
         //Go to next prefab
         this.nextCannonPrefab++;
-        this.actualCannonPrefab = GameObject.Instantiate<GameObject>(this.cannonPrefabs[this.nextCannonPrefab],
-            this.actuallyTheCannonPosition);
+        if (nextCannonPrefab < 5)
+        {
+            this.actualCannonPrefab = GameObject.Instantiate<GameObject>(this.cannonPrefabs[this.nextCannonPrefab],
+                this.actuallyTheCannonPosition);
+        }
+        else
+        {
+            
+            if (AssID == 0)
+            {
+                Game.Instance.playerOneWin = true;
+            }
+            else
+            {
+                Game.Instance.playerOneWin = false;
+            }
+
+            this.nextCannonPrefab = 0;
+            Game.Instance.gameState = Game.GameState.EndGame;
+        }
     }
 
     public void OnDrawGizmos()
