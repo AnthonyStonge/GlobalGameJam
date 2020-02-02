@@ -20,7 +20,7 @@ public class Game : IFlow
     private PlayerManager playerManager;
     private UiManager uiManager;
     private TimeManager timeManager;
-    
+    public bool playerOneWin = false;
     public enum GameState
     {
         Start,
@@ -30,7 +30,7 @@ public class Game : IFlow
     public GameState gameState;
     public void PreInitialize()
     {
-        gameState = GameState.InGame;
+        gameState = GameState.Start;
         playerManager = PlayerManager.Instance;
         uiManager = UiManager.Instance;
         timeManager = TimeManager.Instance;
@@ -67,9 +67,10 @@ public class Game : IFlow
             case  GameState.EndGame:
                 playerManager.canShoot1 = false;
                 playerManager.canShoot2 = false;
+                
+                uiManager.SetEndGame(playerOneWin);
                 playerManager.player1Events.ResetValues();
                 playerManager.player2Events.ResetValues();
-                uiManager.SetEndGame(true);
                 break;
         }
         playerManager.Refresh();
