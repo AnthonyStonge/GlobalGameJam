@@ -58,6 +58,8 @@ public class Game : IFlow
                 playerManager.canShoot2 = false;
                 break;
             case GameState.InGame:
+                playerManager.player1Events.gameOver = false;
+                playerManager.player2Events.gameOver = false;
                 
                 playerManager.canShoot1 = true;
                 playerManager.canShoot2 = true;
@@ -65,6 +67,8 @@ public class Game : IFlow
             case  GameState.EndGame:
                 playerManager.canShoot1 = false;
                 playerManager.canShoot2 = false;
+                playerManager.player1Events.ResetValues();
+                playerManager.player2Events.ResetValues();
                 uiManager.SetEndGame(true);
                 break;
         }

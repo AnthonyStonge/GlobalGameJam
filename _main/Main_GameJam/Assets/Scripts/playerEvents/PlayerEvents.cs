@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Experimental.VFX;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 {
@@ -11,11 +13,16 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         DIE,
         TRHOW,
         START_MOVING,
-        STOP_MOVING
+        STOP_MOVING,
+        FOOT_STEP_LEFT,
+        FOOT_STEP_RIGHT
     }
 
     [Header("Settings")] public float speed = 100;
-
+    public int currentNumOfChick = 0;
+    public float currentRepairPoints = 500;
+    public float initialRepairPoints = 500;
+    
     [Header("Internal")] public Rigidbody rb;
     public Transform shotSpawn;
     private GameObject bulletPrefab;
@@ -25,13 +32,20 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     [SerializeField] private CustomEvent onThrow;
     [SerializeField] private CustomEvent onStartMoving;
     [SerializeField] private CustomEvent onStopMoving;
+    [SerializeField] private VisualEffect footStepLeft;
+    [SerializeField] private VisualEffect footStepRight;
+    [SerializeField] private float delayToShoot;
 
     private Animator animator;
     private Vector2 currentInput;
     private bool isMoving = false;
     private int AssID;
-    public bool eggCompleted;
-    public int numberEgg;
+    private bool hasControl = true;
+    public bool canShoot = true;
+    [HideInInspector] public bool gameOver = false;
+    
+    [HideInInspector] public bool eggCompleted;
+    [HideInInspector] public int numberEgg;
 
     public void PreInitialize()
     {
@@ -60,7 +74,9 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         AddAction(Event.DASH, Dash);
         AddAction(Event.TRHOW, Throw);
         AddAction(Event.START_MOVING, StartMoving);
-        AddAction(Event.STOP_MOVING,StopMoving);
+        AddAction(Event.STOP_MOVING, StopMoving);
+        AddAction(Event.FOOT_STEP_LEFT, Foot_Step_Left);
+        AddAction(Event.FOOT_STEP_RIGHT, Foot_Step_Right);
     }
 
     public void Initialize()
@@ -69,6 +85,23 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void Refresh()
     {
+        
+        if (currentNumOfChick > 0 && !gameOver)
+        {
+            currentRepairPoints -= currentNumOfChick * Time.deltaTime;
+            if (currentRepairPoints <= 0)
+            {
+                Game.Instance.gameState = Game.GameState.EndGame;
+                gameOver = true;
+            }
+        }
+        Debug.Log(this + ", repairPoints : " + currentRepairPoints);
+
+        //DEBUG
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Game.Instance.gameState = Game.GameState.EndGame;
+        }
     }
 
     public void PhysicsRefresh()
@@ -90,43 +123,53 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         onThrow.RemoveAllListeners();
     }
 
+    public void ResetValues()
+    {
+        currentRepairPoints = initialRepairPoints;
+        currentNumOfChick = 0;
+    }
+    
+    public void SmackThatChick()
+    {
+        currentNumOfChick++;
+        
+    }
+
     public void Move(float horizontal, float vertical)
     {
-        //TODO minimum speed 
-        //TODO maximum speed
-        
         //Block movement if player not really pushing the joystick.
-        if ((horizontal < 0.01f && vertical < 0.01f) && (horizontal > -0.01f && vertical > -0.01f))
+        if (hasControl)
         {
-            if (isMoving)
+            if ((horizontal < 0.01f && vertical < 0.01f) && (horizontal > -0.01f && vertical > -0.01f))
             {
-                OnAction(Event.STOP_MOVING);
-                isMoving = false;
+                if (isMoving)
+                {
+                    OnAction(Event.STOP_MOVING);
+                    isMoving = false;
+                }
             }
-            
-        }
-        else
-        {
-            if (!isMoving)
+            else
             {
-                OnAction(Event.START_MOVING);
-                isMoving = true;
-            }
-            
-            var newDirection = Quaternion.LookRotation(new Vector3(horizontal, 0, vertical)).eulerAngles;
+                if (!isMoving)
+                {
+                    OnAction(Event.START_MOVING);
+                    isMoving = true;
+                }
 
-            newDirection.x = 0;
-            newDirection.z = 0;
-            transform.rotation = Quaternion.Euler(newDirection);
-            
-            rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
+                var newDirection = Quaternion.LookRotation(new Vector3(horizontal, 0, vertical)).eulerAngles;
+
+                newDirection.x = 0;
+                newDirection.z = 0;
+                transform.rotation = Quaternion.Euler(newDirection);
+
+                rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
+            }
         }
     }
 
     public void StartMoving()
     {
         animator.SetBool("Run", true);
-        
     }
 
     public void StopMoving()
@@ -134,14 +177,28 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         animator.SetBool("Run", false);
     }
 
+    public void Foot_Step_Left()
+    {
+        this.footStepLeft.Play();
+    }
+
+    public void Foot_Step_Right()
+    {
+        this.footStepRight.Play();
+    }
+
     public void PlayHitSound()
     {
         SoundManager.Instance.PlayOnce(gameObject, 0);
     }
+
     public void Die()
     {
         Debug.Log("In Die");
-        Game.Instance.gameState = Game.GameState.EndGame;
+        animator.SetTrigger("Die");
+        TimeManager.Instance.AddTimedAction(new TimedAction(
+            () => { StartCoroutine(Dissolve(300));}
+            , 2));
     }
 
     public void Dash()
@@ -151,21 +208,47 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void Throw()
     {
-        if (eggCompleted)
+        if (eggCompleted && canShoot)
         {
-            GameObject shot = GameObject.Instantiate(bulletPrefab, shotSpawn.position, shotSpawn.rotation);
-            Bullet bullet = shot.GetComponent<Bullet>();
-            bullet.Initialize(AssID);
-            bullet.Launch(transform);
-            eggCompleted = false;
-            this.numberEgg = 0;
+            animator.SetTrigger("Throw");
+
+            TimeManager.Instance.AddTimedAction(new TimedAction(SpawnBullet, this.delayToShoot));
+            TimeManager.Instance.AddTimedAction(new TimedAction(() => { hasControl = true; }, this.delayToShoot + 0.1f));
+            hasControl = false;
+            canShoot = false;
         }
     }
 
-
-    void IFlow.PreInitialize()
+    private void BlockControls()
     {
-        PreInitialize();
+    }
+
+    private void SpawnBullet()
+    {
+        GameObject shot = GameObject.Instantiate(bulletPrefab, shotSpawn.position, shotSpawn.rotation);
+        Bullet bullet = shot.GetComponent<Bullet>();
+        bullet.Initialize(AssID);
+        bullet.Launch(transform);
+        eggCompleted = false;
+        this.numberEgg = 0;
+    }
+    
+    private IEnumerator Dissolve(float TransitionTime)
+    {
+        float ElapsedTime = 0.0f;
+        float accumulateur = 0;
+        while (ElapsedTime < TransitionTime)
+        {
+            accumulateur += (1 / TransitionTime) * Time.deltaTime;
+            ElapsedTime += Time.deltaTime;
+
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            {
+                renderer.material.SetFloat("_DissolveValue",  renderer.material.GetFloat("_DissolveValue") + accumulateur);
+            }
+            yield return null;
+        }
+        yield return new WaitForEndOfFrame();
     }
 
     public void OnDrawGizmos()
@@ -174,11 +257,10 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         Vector3 direction = transform.forward * 5;
         Gizmos.DrawRay(transform.position, direction);
     }
-    
+
     public void SetAssID(int id)
     {
         AssID = id;
         transform.tag = id.ToString();
     }
-    
 }

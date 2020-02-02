@@ -41,7 +41,7 @@ TagManager:
   - 
   - 
   - 
-  - 
+  - ArenaBounds
   - Bullet
   m_SortingLayers:
   - name: Default

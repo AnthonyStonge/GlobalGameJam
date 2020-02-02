@@ -27,7 +27,7 @@ public class PlayerInputs : MonoBehaviour, IFlow
         float moveVertical = player.GetAxis(1);
         playerEvents.Move(moveHorizontal,moveVertical);
         
-        if (player.GetButtonDown("Shoot") && canShoot)
+        if (player.GetButtonDown("Shoot"))
         {
             playerEvents.Throw();
         }
