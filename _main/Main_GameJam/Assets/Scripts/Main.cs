@@ -8,9 +8,7 @@ public class Main : MonoBehaviour
 {
     
     #region Singleton MonoBehaviour
-    private static Main instance;
-
-    public static Main Instance { get { return instance; } }
+    static public Main Instance { get; private set; }
     #endregion
 
     public enum FlowState
@@ -38,14 +36,14 @@ public class Main : MonoBehaviour
         #region MonoSingleton
         if (Instance != null)
         {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
             //throw new System.Exception("An instance of this singleton already exists.");
             //On peut aussi faire un return ici
             //return;
         }
         else
         {
-            instance = Main.Instance;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         #endregion

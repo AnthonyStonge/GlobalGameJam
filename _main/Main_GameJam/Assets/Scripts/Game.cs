@@ -71,6 +71,8 @@ public class Game : IFlow
                 uiManager.SetEndGame(playerOneWin);
                 playerManager.player1Events.ResetValues();
                 playerManager.player2Events.ResetValues();
+                playerManager.player1Events.multipleP1 = 0;
+                playerManager.player1Events.multipleP2 = 0;
                 break;
         }
         playerManager.Refresh();
