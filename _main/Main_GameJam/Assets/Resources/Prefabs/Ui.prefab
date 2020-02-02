@@ -1369,7 +1369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfChoiceInMenu: 2
   selectedChoice: 0
-  main: {fileID: 0}
+  main: {fileID: 1153487292917714955, guid: 8e00169a9a74bd748a85704f63ed78e8, type: 3}
   startText: {fileID: 1086251764409309864}
   playerWinText: {fileID: 1086251763265788324}
   endText: {fileID: 1086251763265788324}
@@ -3865,13 +3865,13 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -193.832, w: 0}
   m_textInfo:
     textComponent: {fileID: 3205912942403066908}
-    characterCount: 11
+    characterCount: 0
     spriteCount: 0
-    spaceCount: 2
-    wordCount: 3
+    spaceCount: 0
+    wordCount: 0
     linkCount: 0
-    lineCount: 1
-    pageCount: 1
+    lineCount: 0
+    pageCount: 0
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0

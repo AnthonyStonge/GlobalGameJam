@@ -63,7 +63,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     public Transform actuallyTheCannonPosition1;
     public Transform actuallyTheCannonPosition2;
     private Transform actuallyTheCannonPosition;
-    private ushort nextCannonPrefab;
+    private int nextCannonPrefab;
     private ushort nextCannonPosition;
     private GameObject actualCannonPrefab;
     private GameObject stepsParticuleSystem;
@@ -157,7 +157,6 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         {
             this.cannonPosition.Add(new Vector3(254, 133, 341));
             this.HighlightMaterial.material.color = Color.green;
-            
         }
     }
 
@@ -250,6 +249,8 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     public void ResetValues()
     {
         currentRepairPoints = initialRepairPoints;
+        nextCannonPrefab = -1;
+        SwapCannonPrefab();
         currentNumOfChick = 0;
         nextCannonPrefab = 0;
         foreach (var i in PlayerManager.Instance.chicksssss)
@@ -426,10 +427,12 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
             ok += accumulateur;
 
             foreach (SkinnedMeshRenderer renderer in GetComponentsInChildren<SkinnedMeshRenderer>())
-            {
-                renderer.material.SetFloat("_DissolveValue",
-                    renderer.material.GetFloat("_DissolveValue") + accumulateur);
-            }
+
+                if (!renderer.transform.CompareTag("Hat"))
+                {
+                    renderer.material.SetFloat("_DissolveValue",
+                        renderer.material.GetFloat("_DissolveValue") + accumulateur);
+                }
 
             yield return null;
         }
@@ -442,7 +445,10 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     {
         float ElapsedTime = 0.0f;
         float accumulateur = 0;
-        float ok = GetComponentInChildren<SkinnedMeshRenderer>().material.GetFloat("_DissolveValue");
+        SkinnedMeshRenderer lol = GetComponentInChildren<SkinnedMeshRenderer>();
+        float ok = lol.material.GetFloat("_DissolveValue");
+        lol.material.SetFloat("_DissolveValue", 0.2f);
+
         while (ok > -1)
         {
             accumulateur += (1 / TransitionTime) * Time.deltaTime;
@@ -451,15 +457,19 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
             foreach (SkinnedMeshRenderer renderer in GetComponentsInChildren<SkinnedMeshRenderer>())
             {
-                renderer.material.SetFloat("_DissolveValue",
-                    renderer.material.GetFloat("_DissolveValue") - accumulateur);
+                if (!renderer.transform.CompareTag("Hat"))
+                {
+                    if (renderer.material.GetFloat("_DissolveValue") > -1)
+                        renderer.material.SetFloat("_DissolveValue",
+                            renderer.material.GetFloat("_DissolveValue") - accumulateur);
+                }
             }
 
             yield return null;
         }
 
         gameObject.tag = this.AssID.ToString();
-        
+
 
         yield return new WaitForEndOfFrame();
     }
@@ -471,7 +481,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
         hasControl = true;
         TimeManager.Instance.AddTimedAction(new TimedAction(
-            () => { StartCoroutine(Resolve(3)); }, 2f
+            () => { StartCoroutine(Resolve(45)); }, 0.1f
         ));
 
         isDead = false;
