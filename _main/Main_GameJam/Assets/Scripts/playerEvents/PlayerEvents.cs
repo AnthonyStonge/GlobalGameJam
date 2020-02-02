@@ -20,6 +20,8 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     }
 
     [Header("Settings")] public float speed = 100;
+    public Transform lookAt1;
+    public Transform lookAt2;
     public int currentNumOfChick = 0;
     public float currentRepairPoints = 200;
     public float initialRepairPoints = 200;
@@ -64,13 +66,16 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     private GameObject actualCannonPrefab;
     private GameObject stepsParticuleSystem;
     public VisualEffect deathVisual;
+    public int multipleP1 = 0;
+    public int multipleP2 = 0;
 
     private float factor;
     public void PreInitialize()
     {
         float intensity = 2;
         factor = Mathf.Pow(2, intensity);
-
+        lookAt1 = GameObject.FindWithTag("LookAt1").transform;
+        lookAt2 = GameObject.FindWithTag("LookAt2").transform;
         chick = Resources.Load<Chick>("Player/Chick/Chick");
         bulletPrefab = Resources.Load<GameObject>("Prefabs/Bullet/Egg");
         this.stepsParticuleSystem = Resources.Load<GameObject>("VFX/Steps");
@@ -152,8 +157,10 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
             currentRepairPoints -= currentNumOfChick * Time.deltaTime;
             if (currentRepairPoints <= 0)
             {
+                
                 Game.Instance.gameState = Game.GameState.EndGame;
                 gameOver = true;
+                
             }
         }
         //Debug.Log(this + ", repairPoints : " + currentRepairPoints);
@@ -240,10 +247,33 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         currentNumOfChick++;
         Chick chicky = Instantiate(chick, new Vector3(254, 133, 439), Quaternion.identity);
         chicky.Initialize();
+        if (AssID == 10)
+        {
+            chicky.firstPlayer = true;
+            //chicky.transform.LookAt(lookAt1);
+        }
+        else
+        {
+            chicky.firstPlayer = false;
+            //chicky.transform.LookAt(lookAt2);
+        }
+
         if (nextCannonPosition == this.cannonPosition.Count)
             nextCannonPosition = 0;
-        chicky.SetCannonPosition(this.cannonPosition[nextCannonPosition++]);
 
+        if (AssID == 10)
+        {
+            //chicky.transform.LookAt(lookAt1);
+            chicky.SetCannonPosition(this.cannonPosition[nextCannonPosition++] +
+                                     new Vector3(-19f, 13f, ((7 * multipleP1) - 3)));
+            multipleP1 += 1;
+        }
+        else
+        {
+            chicky.SetCannonPosition(this.cannonPosition[nextCannonPosition++] -
+                                     new Vector3((11 * multipleP2) + 36f, 0, (-3 * multipleP2) + 24f));
+            multipleP2 += 1;
+        }
 
         PlayerManager.Instance.chicksssss.Add(chicky);
         SwapCannonPrefab();
@@ -316,10 +346,9 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         isDead = true;
         //Debug.Log("In Die");
         animator.SetTrigger("Die");
+        SoundManager.Instance.PlayOnce(gameObject, 3);
         gameObject.tag = "IRON ASS";
-        
         Main.Instance.StartShake(2f, 0.2f, 0.5f);
-
         GameObject LOL = Instantiate(deathVisual.gameObject, deathVisual.transform.position, Quaternion.identity, null);
         LOL.transform.localScale = transform.localScale;
         Destroy(LOL, 2.5f);
@@ -443,7 +472,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         else
         {
 
-            if (AssID == 0)
+            if (AssID == 10)
             {
                 Game.Instance.playerOneWin = true;
             }
