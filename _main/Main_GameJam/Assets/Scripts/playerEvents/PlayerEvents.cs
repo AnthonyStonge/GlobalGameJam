@@ -75,6 +75,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void PreInitialize()
     {
+        smokeCANCER = Resources.Load<VisualEffect>("Prefabs/Smoke");
         float intensity = 2;
         factor = Mathf.Pow(2, intensity);
         lookAt1 = GameObject.FindWithTag("LookAt1").transform;
