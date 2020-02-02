@@ -37,7 +37,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     [SerializeField] private VisualEffect footStepRight;
     [SerializeField] private float delayToShoot;
 
-    public GameObject chick;
+    public Chick chick;
     private Animator chickAnimator;
     private Animator animator;
     private Vector2 currentInput;
@@ -51,16 +51,19 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     [HideInInspector] public bool eggCompleted;
     [HideInInspector] public int numberEgg;
     private List<Vector3> spawnPosition;
+    private List<Vector3> cannonPosition;
+    private ushort nextCannonPosition;
 
     public void PreInitialize()
     {
-        chick = Resources.Load<GameObject>("Player/Chick/Chick");
+        chick = Resources.Load<Chick>("Player/Chick/Chick");
         bulletPrefab = Resources.Load<GameObject>("Prefabs/Bullet/Egg");
 
         chickAnimator = chick.GetComponent<Animator>();
-        
+
         eggCompleted = true;
         this.numberEgg = 2;
+        this.nextCannonPosition = 0;
 
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
@@ -91,6 +94,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     public void Initialize()
     {
         this.spawnPosition = new List<Vector3>();
+        this.cannonPosition = new List<Vector3>();
 
         this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
         this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
@@ -98,6 +102,12 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
         this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
         this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
+
+        if (this.AssID == 10)
+            this.cannonPosition.Add(new Vector3(141, 1, 8));
+        else
+            this.cannonPosition.Add(new Vector3(161, 1, 8));
+
     }
 
     public void Refresh()
@@ -148,7 +158,12 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     public void SmackThatChick()
     {
         currentNumOfChick++;
-        Instantiate(chick, new Vector3(0, 0, 0), Quaternion.identity);
+        Chick chicky = Instantiate(chick, new Vector3(0, 5, 0), Quaternion.identity);
+        chicky.Initialize();
+        if (nextCannonPosition == this.cannonPosition.Count)
+            nextCannonPosition = 0;
+        chicky.SetCannonPosition(this.cannonPosition[nextCannonPosition++]);
+        PlayerManager.Instance.chicksssss.Add(chicky);
     }
 
     public void Move(float horizontal, float vertical)
@@ -307,7 +322,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         transform.position = this.spawnPosition[Random.Range(0, this.spawnPosition.Count - 1)];
         animator.SetTrigger("Respawn");
         gameObject.tag = "IRON ASS";
-    
+
         TimeManager.Instance.AddTimedAction(new TimedAction(
             () => { StartCoroutine(Resolve(3)); }, 2f
         ));
