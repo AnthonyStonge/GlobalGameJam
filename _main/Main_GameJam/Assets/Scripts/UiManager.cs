@@ -62,9 +62,14 @@ public class UiManager : IFlow
         camController.camState = CamController.CamState.Transition;
         //uiPrincipal.StartGame();
     }
+    public void SetCamFov()
+    {
+        camController.camState = CamController.CamState.InGame;
+    }
     public void SetEndGame(bool playerOneWin)
     {
         uiPrincipal.EndGame(playerOneWin);
+        camController.camState = CamController.CamState.EndGame;
     }
 
     public void SetMenu()
