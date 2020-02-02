@@ -149,9 +149,15 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
         //Position on cannon for Chickss
         if (this.AssID == 10)
+        {
             this.cannonPosition.Add(new Vector3(254, 133, 533));
+            this.HighlightMaterial.material = Resources.Load<Material>("Material/EggPlayer_1");
+        }
         else
+        {
             this.cannonPosition.Add(new Vector3(254, 133, 341));
+            this.HighlightMaterial.material = Resources.Load<Material>("Material/EggPlayer_2");
+        }
     }
 
     public void Refresh()
@@ -472,9 +478,10 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     private void SwapCannonPrefab()
     {
-        GameObject LOL = Instantiate(smokeCANCER.gameObject, actuallyTheCannonPosition.position, Quaternion.identity, null);
+        GameObject LOL = Instantiate(smokeCANCER.gameObject, actuallyTheCannonPosition.position, Quaternion.identity,
+            null);
         LOL.GetComponent<VisualEffect>().Play();
-        
+
         Destroy(actualCannonPrefab);
         //Go to next prefab
         this.nextCannonPrefab++;
@@ -501,7 +508,6 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
         Vector3 direction = transform.forward * 5;
         Gizmos.DrawRay(transform.position, direction);
     }
