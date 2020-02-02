@@ -63,7 +63,7 @@ public class CamController : MonoBehaviour
         {
             accumulateur += (1 / TransitionTime) * Time.deltaTime;
             ElapsedTime += Time.deltaTime;
-            track.m_PathPosition = Mathf.Lerp(0, 7, accumulateur);
+            track.m_PathPosition = Mathf.Lerp(0, 8, accumulateur);
             yield return null;
         }
         SetVcam2();
