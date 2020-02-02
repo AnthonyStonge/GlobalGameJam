@@ -243,6 +243,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     {
         currentRepairPoints = initialRepairPoints;
         currentNumOfChick = 0;
+        nextCannonPrefab = 0;
         foreach (var i in PlayerManager.Instance.chicksssss)
         {
             Destroy(i.gameObject);
