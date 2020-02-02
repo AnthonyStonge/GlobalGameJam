@@ -131,9 +131,9 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
         //Position on cannon for Chickss
         if (this.AssID == 10)
-            this.cannonPosition.Add(new Vector3(141, 1, 8));
+            this.cannonPosition.Add(new Vector3(254, 133, 533));
         else
-            this.cannonPosition.Add(new Vector3(161, 1, 8));
+            this.cannonPosition.Add(new Vector3(254, 133, 341));
     }
 
     public void Refresh()
@@ -204,7 +204,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     public void SmackThatChick()
     {
         currentNumOfChick++;
-        Chick chicky = Instantiate(chick, new Vector3(0, 5, 0), Quaternion.identity);
+        Chick chicky = Instantiate(chick, new Vector3(254, 133, 439), Quaternion.identity);
         chicky.Initialize();
         if (nextCannonPosition == this.cannonPosition.Count)
             nextCannonPosition = 0;
@@ -391,10 +391,10 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     private void SwapCannonPrefab()
     {
-        GameObject.Destroy(this.actualCannonPrefab);
+        Destroy(actualCannonPrefab);
         //Go to next prefab
         this.nextCannonPrefab++;
-        this.actualCannonPrefab = GameObject.Instantiate<GameObject>(this.cannonPrefabs[this.nextCannonPrefab],
+        this.actualCannonPrefab = Instantiate(cannonPrefabs[nextCannonPrefab],
             this.actuallyTheCannonPosition);
     }
 
