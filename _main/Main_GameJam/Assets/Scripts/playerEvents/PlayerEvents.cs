@@ -21,8 +21,8 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     [Header("Settings")] public float speed = 100;
     public int currentNumOfChick = 0;
-    public float currentRepairPoints = 500;
-    public float initialRepairPoints = 500;
+    public float currentRepairPoints = 200;
+    public float initialRepairPoints = 200;
 
     [Header("Internal")] public Rigidbody rb;
     public Transform shotSpawn;
@@ -119,9 +119,9 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         this.actuallyTheCannonPosition2 = GameObject.Instantiate(this.actuallyTheCannonPosition2);
         
         if (this.AssID == 10)
-            this.actuallyTheCannonPosition = this.actuallyTheCannonPosition1;
-        else
             this.actuallyTheCannonPosition = this.actuallyTheCannonPosition2;
+        else
+            this.actuallyTheCannonPosition = this.actuallyTheCannonPosition1;
         this.actualCannonPrefab = GameObject.Instantiate<GameObject>(this.cannonPrefabs[this.nextCannonPrefab],
             this.actuallyTheCannonPosition);
 
