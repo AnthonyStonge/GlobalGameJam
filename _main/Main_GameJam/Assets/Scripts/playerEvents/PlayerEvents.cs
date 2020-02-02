@@ -96,12 +96,12 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         this.spawnPosition = new List<Vector3>();
         this.cannonPosition = new List<Vector3>();
 
-        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
-        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
-        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
-        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
-        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
-        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
+        this.spawnPosition.Add(new Vector3(Random.Range(360, 450), 135, Random.Range(580, 670)));
+        this.spawnPosition.Add(new Vector3(Random.Range(360, 450), 135, Random.Range(580, 670)));
+        this.spawnPosition.Add(new Vector3(Random.Range(360, 450), 135, Random.Range(580, 670)));
+        this.spawnPosition.Add(new Vector3(Random.Range(360, 450), 135, Random.Range(580, 670)));
+        this.spawnPosition.Add(new Vector3(Random.Range(360, 450), 135, Random.Range(580, 670)));
+        this.spawnPosition.Add(new Vector3(Random.Range(360, 450), 135, Random.Range(580, 670)));
 
         if (this.AssID == 10)
             this.cannonPosition.Add(new Vector3(141, 1, 8));
