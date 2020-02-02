@@ -130,4 +130,10 @@ public class PlayerManager : IFlow
         player1Events.EndFlow();
         player2Events.EndFlow();
     }
+
+    public void ReinitializePosition()
+    {
+        player1.transform.position = player1Position;
+        player2.transform.position = player2Position;
+    }
 }

@@ -11,10 +11,10 @@ public class UiPrincipal : MonoBehaviour
     public int selectedChoice = 0;
     public Main main;
     public TextMeshProUGUI startText;
+    public TextMeshProUGUI playerWinText;
     public TextMeshProUGUI endText;
     public GameObject menuPanel;
     public GameObject gameUi;
-    public Main mainEntry;
     [SerializeField] private List<TextMeshProUGUI> choiceMenu;
     private float countDownDefaultSize;
     [HideInInspector]public float timeCountDownBegin = -1;
@@ -93,11 +93,18 @@ public class UiPrincipal : MonoBehaviour
     public void EndGame(bool playerOneWin)
     {
         endText.transform.parent.gameObject.SetActive(true);
+        if(playerOneWin)
+            playerWinText.text = "Player 1 Win";
+        else
+        {
+            playerWinText.text = "Player 2 Win";
+        }
     }
 
     public void Recommencer()
     {
         Game.Instance.gameState = Game.GameState.Start;
+        PlayerManager.Instance.ReinitializePosition();
         StartGame();
         
         
