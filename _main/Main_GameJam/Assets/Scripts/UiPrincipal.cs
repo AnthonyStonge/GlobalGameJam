@@ -15,6 +15,7 @@ public class UiPrincipal : MonoBehaviour
     public TextMeshProUGUI endText;
     public GameObject menuPanel;
     public GameObject gameUi;
+    public GameObject instruction;
     [SerializeField] private List<TextMeshProUGUI> choiceMenu;
     private float countDownDefaultSize;
     [HideInInspector]public float timeCountDownBegin = -1;
@@ -58,6 +59,7 @@ public class UiPrincipal : MonoBehaviour
             timeCountDownBegin -= Time.deltaTime;
             if (((int) timeCountDownBegin + 1).ToString() != startText.text)
             {
+                UiManager.Instance.SetCamFov();
                 main.StartShake(1.3f, 0.2f, 0.15f);
                 startText.text = ((int) timeCountDownBegin + 1).ToString();
                 startText.rectTransform.sizeDelta = new Vector2(startText.rectTransform.rect.width, countDownDefaultSize);
@@ -105,6 +107,7 @@ public class UiPrincipal : MonoBehaviour
     {
         Game.Instance.gameState = Game.GameState.Start;
         PlayerManager.Instance.ReinitializePosition();
+        
         StartGame();
         
         
@@ -135,5 +138,16 @@ public class UiPrincipal : MonoBehaviour
     public void ChangeTextColor()
     {
         
+    }
+
+    public void ShowInstruvtion()
+    {
+        menuPanel.SetActive(false);
+        instruction.SetActive(true);
+    }
+    public void ShowMenu()
+    {
+        menuPanel.SetActive(true);
+        instruction.SetActive(false);
     }
 }

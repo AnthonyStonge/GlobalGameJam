@@ -44,9 +44,13 @@ public class CamController : MonoBehaviour
                 DoTransition();
             }
         }
-        else if(camState == CamState.InGame)
+        else if (camState == CamState.InGame )
         {
-            
+            vCam1.GetCinemachineComponent<CinemachineGroupComposer>().m_MinimumFOV = 60;
+        }
+        else if(camState == CamState.EndGame)
+        {
+            vCam1.GetCinemachineComponent<CinemachineGroupComposer>().m_MinimumFOV = 80;
         }
     }
 
