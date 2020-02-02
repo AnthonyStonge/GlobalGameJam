@@ -33,7 +33,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     [SerializeField] private CustomEvent onThrow;
     [SerializeField] private CustomEvent onStartMoving;
     [SerializeField] private CustomEvent onStopMoving;
-    [SerializeField] private VisualEffect footStepLeft;
+    //[SerializeField] private VisualEffect footStepLeft;
     [SerializeField] private VisualEffect footStepRight;
     [SerializeField] private float delayToShoot;
 
@@ -59,11 +59,13 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     private ushort nextCannonPrefab;
     private ushort nextCannonPosition;
     private GameObject actualCannonPrefab;
+    private GameObject stepsParticuleSystem;
 
     public void PreInitialize()
     {
         chick = Resources.Load<Chick>("Player/Chick/Chick");
         bulletPrefab = Resources.Load<GameObject>("Prefabs/Bullet/Egg");
+        this.stepsParticuleSystem = Resources.Load<GameObject>("VFX/Steps");
 
         chickAnimator = chick.GetComponent<Animator>();
 
@@ -253,12 +255,15 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void Foot_Step_Left()
     {
-        this.footStepLeft.Play();
+        //this.footStepLeft.Play();
     }
 
     public void Foot_Step_Right()
     {
-        this.footStepRight.Play();
+        //this.footStepRight.Play();
+        GameObject thatShitIsGoingDown = Instantiate(this.stepsParticuleSystem, footStepRight.transform.position, Quaternion.identity);
+        thatShitIsGoingDown.GetComponent<VisualEffect>().Play();
+        Destroy(thatShitIsGoingDown, 3f);
     }
 
     public void PlayHitSound()
