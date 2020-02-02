@@ -11,6 +11,8 @@ TagManager:
   - 20
   - CamBrain2
   - IRON ASS
+  - LookAt1
+  - LookAt2
   layers:
   - Default
   - TransparentFX
