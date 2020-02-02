@@ -311,6 +311,9 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         isDead = true;
         Debug.Log("In Die");
         animator.SetTrigger("Die");
+        gameObject.tag = "IRON ASS";
+        
+        Main.Instance.StartShake(2f, 0.2f, 0.5f);
 
         GameObject LOL = Instantiate(deathVisual.gameObject, deathVisual.transform.position, Quaternion.identity, null);
         LOL.transform.localScale = transform.localScale;
@@ -413,7 +416,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     {
         transform.position = this.spawnPosition[Random.Range(0, this.spawnPosition.Count - 1)];
         animator.SetTrigger("Respawn");
-        gameObject.tag = "IRON ASS";
+        
 
         TimeManager.Instance.AddTimedAction(new TimedAction(
             () => { StartCoroutine(Resolve(3)); }, 2f
