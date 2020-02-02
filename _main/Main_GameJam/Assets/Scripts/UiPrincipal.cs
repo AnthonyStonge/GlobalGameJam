@@ -93,13 +93,16 @@ public class UiPrincipal : MonoBehaviour
     }
     public void StartGame()
     {
-        menuPanel.SetActive(false);
-        gameUi.SetActive(true);
         endText.transform.parent.gameObject.SetActive(false);
         startText.transform.parent.gameObject.SetActive(true);
         timeCountDownBegin = 3;
     }
 
+    public void gameUiActivator()
+    {
+        menuPanel.SetActive(false);
+        gameUi.SetActive(true);
+    }
     private void Shrink(int sizeToReduce)
     {
         startText.rectTransform.sizeDelta = new Vector2(startText.rectTransform.rect.width, startText.rectTransform.rect.height - sizeToReduce);

@@ -19,9 +19,13 @@ public class UiManager : IFlow
     #endregion
     
     private UiPrincipal uiPrincipal;
+    private TimeManager timeManager;
+    private CamController camController;
     public void PreInitialize()
     {
+        camController = GameObject.FindWithTag("CamController").GetComponent<CamController>();
         uiPrincipal = GameObject.FindWithTag("Ui").GetComponent<UiPrincipal>();
+        timeManager = TimeManager.Instance;
     }
 
     public void Initialize()
@@ -53,7 +57,10 @@ public class UiManager : IFlow
 
     public void SetBeginGame()
     {
-        uiPrincipal.StartGame();
+        timeManager.AddTimedAction(new TimedAction(uiPrincipal.StartGame, 4f));
+        uiPrincipal.gameUiActivator();
+        camController.camState = CamController.CamState.Transition;
+        //uiPrincipal.StartGame();
     }
     public void SetEndGame(bool playerOneWin)
     {
