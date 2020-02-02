@@ -32,8 +32,12 @@ public class PlayerManager : IFlow
     public Vector3 player2Position = new Vector3(10, 1f, 0);
     public bool canShoot2;
 
+    public List<Chick> chicksssss;
+
     public void PreInitialize()
     {
+        this.chicksssss = new List<Chick>();
+
         player1 = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Chicken"), player1Position,
             Quaternion.identity);
         player2 = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/Chicken"), player2Position,
@@ -90,6 +94,11 @@ public class PlayerManager : IFlow
         player2Inputs.Refresh();
         player1Events.Refresh();
         player2Events.Refresh();
+
+        foreach (Chick chick in this.chicksssss)
+        {
+            chick.Refresh();
+        }
     }
 
     public void PhysicsRefresh()
@@ -98,6 +107,11 @@ public class PlayerManager : IFlow
         player2Inputs.PhysicsRefresh();
         player1Events.PhysicsRefresh();
         player2Events.PhysicsRefresh();
+        
+        foreach (Chick chick in this.chicksssss)
+        {
+            chick.PhysicRefresh();
+        }
     }
 
     public void LateRefresh()
