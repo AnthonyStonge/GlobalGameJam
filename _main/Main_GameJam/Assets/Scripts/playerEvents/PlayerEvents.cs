@@ -52,7 +52,13 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     [HideInInspector] public int numberEgg;
     private List<Vector3> spawnPosition;
     private List<Vector3> cannonPosition;
+    private List<GameObject> cannonPrefabs;
+    public Transform actuallyTheCannonPosition1;
+    public Transform actuallyTheCannonPosition2;
+    private Transform actuallyTheCannonPosition;
+    private ushort nextCannonPrefab;
     private ushort nextCannonPosition;
+    private GameObject actualCannonPrefab;
 
     public void PreInitialize()
     {
@@ -64,6 +70,8 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         eggCompleted = true;
         this.numberEgg = 2;
         this.nextCannonPosition = 0;
+        this.nextCannonPrefab = 0;
+        this.cannonPrefabs = new List<GameObject>();
 
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
@@ -93,21 +101,36 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void Initialize()
     {
+        LoadCannonPrefab();
+        this.actuallyTheCannonPosition1 = GameObject.Instantiate(this.actuallyTheCannonPosition1);
+        this.actuallyTheCannonPosition2 = GameObject.Instantiate(this.actuallyTheCannonPosition2);
+        
+        if (this.AssID == 10)
+            this.actuallyTheCannonPosition = this.actuallyTheCannonPosition1;
+        else
+            this.actuallyTheCannonPosition = this.actuallyTheCannonPosition2;
+        this.actualCannonPrefab = GameObject.Instantiate<GameObject>(this.cannonPrefabs[this.nextCannonPrefab],
+            this.actuallyTheCannonPosition);
+
         this.spawnPosition = new List<Vector3>();
         this.cannonPosition = new List<Vector3>();
 
-        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
-        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
-        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
-        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
-        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
-        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
+        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
+        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
+        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
+        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
+        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
+        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
+        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
+        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
+        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
+        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
+        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
 
         if (this.AssID == 10)
             this.cannonPosition.Add(new Vector3(141, 1, 8));
         else
             this.cannonPosition.Add(new Vector3(161, 1, 8));
-
     }
 
     public void Refresh()
@@ -142,6 +165,26 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     {
     }
 
+    private void LoadCannonPrefab()
+    {
+        if (this.AssID == 10)
+        {
+            this.cannonPrefabs.Add(Resources.Load<GameObject>("Prefabs/Cannon/Cannon_State_0_0"));
+            this.cannonPrefabs.Add(Resources.Load<GameObject>("Prefabs/Cannon/Cannon_State_1_0"));
+            this.cannonPrefabs.Add(Resources.Load<GameObject>("Prefabs/Cannon/Cannon_State_2_0"));
+            this.cannonPrefabs.Add(Resources.Load<GameObject>("Prefabs/Cannon/Cannon_State_3_0"));
+            this.cannonPrefabs.Add(Resources.Load<GameObject>("Prefabs/Cannon/Cannon_State_4_0"));
+        }
+        else
+        {
+            this.cannonPrefabs.Add(Resources.Load<GameObject>("Prefabs/Cannon/Cannon_State_0_1"));
+            this.cannonPrefabs.Add(Resources.Load<GameObject>("Prefabs/Cannon/Cannon_State_1_1"));
+            this.cannonPrefabs.Add(Resources.Load<GameObject>("Prefabs/Cannon/Cannon_State_2_1"));
+            this.cannonPrefabs.Add(Resources.Load<GameObject>("Prefabs/Cannon/Cannon_State_3_1"));
+            this.cannonPrefabs.Add(Resources.Load<GameObject>("Prefabs/Cannon/Cannon_State_4_1"));
+        }
+    }
+
     private void OnDestroy()
     {
         onDash.RemoveAllListeners();
@@ -164,6 +207,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
             nextCannonPosition = 0;
         chicky.SetCannonPosition(this.cannonPosition[nextCannonPosition++]);
         PlayerManager.Instance.chicksssss.Add(chicky);
+        SwapCannonPrefab();
     }
 
     public void Move(float horizontal, float vertical)
@@ -187,7 +231,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
                     isMoving = true;
                 }
 
-                var newDirection = Quaternion.LookRotation(new Vector3(-vertical, 0,horizontal )).eulerAngles;
+                var newDirection = Quaternion.LookRotation(new Vector3(-vertical, 0, horizontal)).eulerAngles;
 
                 newDirection.x = 0;
                 newDirection.z = 0;
@@ -251,10 +295,6 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
             hasControl = false;
             canShoot = false;
         }
-    }
-
-    private void BlockControls()
-    {
     }
 
     private void SpawnBullet()
@@ -328,6 +368,15 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         ));
 
         isDead = false;
+    }
+
+    private void SwapCannonPrefab()
+    {
+        GameObject.Destroy(this.actualCannonPrefab);
+        //Go to next prefab
+        this.nextCannonPrefab++;
+        this.actualCannonPrefab = GameObject.Instantiate<GameObject>(this.cannonPrefabs[this.nextCannonPrefab],
+            this.actuallyTheCannonPosition);
     }
 
     public void OnDrawGizmos()

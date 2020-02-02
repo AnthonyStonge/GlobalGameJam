@@ -380,6 +380,10 @@ MonoBehaviour:
   gameOver: 0
   eggCompleted: 0
   numberEgg: 0
+  actuallyTheCannonPosition1: {fileID: 8456962880704394227, guid: e223a7acc693eb948b2231045819c8ad,
+    type: 3}
+  actuallyTheCannonPosition2: {fileID: 7973195694201074931, guid: 21f98d07c52dfb84e81d603fc4a061c0,
+    type: 3}
 --- !u!54 &3983470910506093805
 Rigidbody:
   m_ObjectHideFlags: 0
