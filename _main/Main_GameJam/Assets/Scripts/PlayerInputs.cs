@@ -15,17 +15,22 @@ public class PlayerInputs : MonoBehaviour, IFlow
     public void PreInitialize()
     {
         player = ReInput.players.GetPlayer(playerID);
+        
     }
 
     public void Initialize()
     {
+        SoundManager.Instance.AddAudioSource(gameObject, GetComponent<AudioSource>());
     }
 
     public void Refresh()
     {
         if (player.GetButtonDown("Shoot") && canShoot)
         {
+            if(playerEvents.eggCompleted)
+                SoundManager.Instance.PlayOnce(gameObject, 2);
             playerEvents.Throw();
+            
         }
     }
 

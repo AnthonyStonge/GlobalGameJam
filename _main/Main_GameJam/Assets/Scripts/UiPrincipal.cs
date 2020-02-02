@@ -37,14 +37,14 @@ public class UiPrincipal : MonoBehaviour
         {
             for (int i = 0; i < choiceMenu.Count; i++)
             {
-                if (i == selectedChoice)
+                /*if (i == selectedChoice)
                 {
                     choiceMenu[selectedChoice].GetComponent<UiChangeColor>().ChangeColorEnter();
                 }
                 else
                 {
                     choiceMenu[selectedChoice].GetComponent<UiChangeColor>().ChangeColorExit();
-                }
+                }*/
             }
             
             
