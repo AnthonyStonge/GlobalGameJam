@@ -371,7 +371,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         Destroy(LOL, 2.5f);
 
         TimeManager.Instance.AddTimedAction(new TimedAction(
-            () => { StartCoroutine(Dissolve(3)); }
+            () => { StartCoroutine(Dissolve(60)); }
             , .5f));
     }
 
@@ -458,7 +458,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         }
 
         gameObject.tag = this.AssID.ToString();
-        hasControl = true;
+        
 
         yield return new WaitForEndOfFrame();
     }
@@ -468,7 +468,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         transform.position = this.spawnPosition[Random.Range(0, this.spawnPosition.Count - 1)];
         animator.SetTrigger("Respawn");
 
-
+        hasControl = true;
         TimeManager.Instance.AddTimedAction(new TimedAction(
             () => { StartCoroutine(Resolve(3)); }, 2f
         ));
