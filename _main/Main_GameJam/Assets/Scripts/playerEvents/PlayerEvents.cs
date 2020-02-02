@@ -37,6 +37,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     [SerializeField] private VisualEffect footStepRight;
     [SerializeField] private float delayToShoot;
 
+    public VisualEffect plumePOWER;
     public Chick chick;
     private Animator chickAnimator;
     private Animator animator;
@@ -60,6 +61,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     private ushort nextCannonPosition;
     private GameObject actualCannonPrefab;
     private GameObject stepsParticuleSystem;
+    public VisualEffect deathVisual;
 
     public void PreInitialize()
     {
@@ -261,9 +263,9 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     public void Foot_Step_Right()
     {
         //this.footStepRight.Play();
-        GameObject thatShitIsGoingDown = Instantiate(this.stepsParticuleSystem, footStepRight.transform.position, Quaternion.identity);
-        thatShitIsGoingDown.GetComponent<VisualEffect>().Play();
-        Destroy(thatShitIsGoingDown, 3f);
+       // GameObject thatShitIsGoingDown = Instantiate(this.stepsParticuleSystem, footStepRight.transform.position, Quaternion.identity);
+        //thatShitIsGoingDown.GetComponent<VisualEffect>().Play();
+       // Destroy(thatShitIsGoingDown, 3f);
     }
 
     public void PlayHitSound()
@@ -277,6 +279,11 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         isDead = true;
         Debug.Log("In Die");
         animator.SetTrigger("Die");
+
+        GameObject LOL = Instantiate(deathVisual.gameObject, deathVisual.transform.position, Quaternion.identity,null);
+        LOL.transform.localScale = transform.localScale;
+        Destroy(LOL, 2.5f);
+        
         TimeManager.Instance.AddTimedAction(new TimedAction(
             () => { StartCoroutine(Dissolve(3)); }
             , 2));
@@ -292,6 +299,8 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         if (eggCompleted && canShoot)
         {
             animator.SetTrigger("Throw");
+            
+        
 
             TimeManager.Instance.AddTimedAction(new TimedAction(SpawnBullet, this.delayToShoot));
             TimeManager.Instance.AddTimedAction(new TimedAction(() => { hasControl = true; },
@@ -307,6 +316,12 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         Bullet bullet = shot.GetComponent<Bullet>();
         bullet.Initialize(AssID);
         bullet.Launch(transform);
+        
+        GameObject LOL = Instantiate(plumePOWER.gameObject, plumePOWER.transform.position, Quaternion.identity,null);
+        LOL.transform.up = -transform.forward;
+        LOL.transform.localScale = transform.localScale;
+        Destroy(LOL, 1.5f);
+        
         eggCompleted = false;
         this.numberEgg = 0;
     }
