@@ -23,11 +23,7 @@ public class PlayerInputs : MonoBehaviour, IFlow
 
     public void Refresh()
     {
-        float moveHorizontal = player.GetAxis(0);
-        float moveVertical = player.GetAxis(1);
-        playerEvents.Move(moveHorizontal,moveVertical);
-        
-        if (player.GetButtonDown("Shoot"))
+        if (player.GetButtonDown("Shoot") && canShoot)
         {
             playerEvents.Throw();
         }
@@ -35,7 +31,11 @@ public class PlayerInputs : MonoBehaviour, IFlow
 
     public void PhysicsRefresh()
     {
-       
+        float moveHorizontal = player.GetAxis(0);
+        float moveVertical = player.GetAxis(1);
+        playerEvents.Move(moveHorizontal,moveVertical);
+        
+        
       
     }
 

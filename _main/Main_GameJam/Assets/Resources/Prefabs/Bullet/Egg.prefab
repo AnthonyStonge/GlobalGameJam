@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55131337c08610d4788dd12e6f1c7049, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: 150
+  throwForce: 195
   explosionForce: 30
   explosionRadius: 5
   offsetExplosion: {x: 0.2, y: 0.4, z: 0.3}
