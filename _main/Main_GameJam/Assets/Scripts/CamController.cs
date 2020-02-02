@@ -75,8 +75,10 @@ public class CamController : MonoBehaviour
     private void SetVcam2()
     {
         target.target = PlayerManager.Instance.player1.transform;
+        target.radius = 30;
         targetGroup.m_Targets.SetValue(target, 0);
         target2.target = PlayerManager.Instance.player2.transform;
+        target2.radius = 30;
         targetGroup.m_Targets.SetValue(target2, 1);
         vCam2.gameObject.SetActive(false);
         vCam1.gameObject.SetActive(true);
