@@ -52,7 +52,7 @@ public class CamController : MonoBehaviour
 
     private void DoTransition()
     {
-        StartCoroutine(transition(2.0f, vCam2.GetCinemachineComponent<CinemachineTrackedDolly>()));
+        StartCoroutine(transition(5.0f, vCam2.GetCinemachineComponent<CinemachineTrackedDolly>()));
     }
 
     private IEnumerator transition(float TransitionTime, CinemachineTrackedDolly track)
