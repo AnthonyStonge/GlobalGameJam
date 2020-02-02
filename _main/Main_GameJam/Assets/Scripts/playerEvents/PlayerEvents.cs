@@ -115,18 +115,17 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         this.spawnPosition = new List<Vector3>();
         this.cannonPosition = new List<Vector3>();
 
-        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
-        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
-        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
-        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
-        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
-        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
-        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
-        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
-        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
-        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
-        this.spawnPosition.Add(new Vector3(Random.Range(370, 440), 138, Random.Range(592, 667)));
+        this.spawnPosition.Add(new Vector3(Random.Range(215, 277), 134, Random.Range(385, 442)));
+        this.spawnPosition.Add(new Vector3(Random.Range(215, 277), 134, Random.Range(385, 442)));
+        this.spawnPosition.Add(new Vector3(Random.Range(215, 277), 134, Random.Range(385, 442)));
+        this.spawnPosition.Add(new Vector3(Random.Range(215, 277), 134, Random.Range(385, 442)));
+        this.spawnPosition.Add(new Vector3(Random.Range(215, 277), 134, Random.Range(385, 442)));
+        this.spawnPosition.Add(new Vector3(Random.Range(215, 277), 134, Random.Range(385, 442)));
+        this.spawnPosition.Add(new Vector3(Random.Range(215, 277), 134, Random.Range(385, 442)));
+        this.spawnPosition.Add(new Vector3(Random.Range(215, 277), 134, Random.Range(385, 442)));
+        this.spawnPosition.Add(new Vector3(Random.Range(215, 277), 134, Random.Range(385, 442)));
 
+        //Position on cannon for Chickss
         if (this.AssID == 10)
             this.cannonPosition.Add(new Vector3(141, 1, 8));
         else
