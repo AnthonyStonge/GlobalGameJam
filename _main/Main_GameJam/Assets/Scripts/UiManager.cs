@@ -24,7 +24,7 @@ public class UiManager : IFlow
     public void PreInitialize()
     {
         camController = GameObject.FindWithTag("CamController").GetComponent<CamController>();
-        uiPrincipal = GameObject.FindWithTag("Ui").GetComponent<UiPrincipal>();
+        uiPrincipal = GameObject.FindObjectOfType<UiPrincipal>();
         timeManager = TimeManager.Instance;
     }
 
