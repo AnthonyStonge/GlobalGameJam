@@ -10,6 +10,7 @@ TagManager:
   - 10
   - 20
   - CamBrain2
+  - IRON ASS
   layers:
   - Default
   - TransparentFX
@@ -19,29 +20,29 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
   - ArenaBounds
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
   - Bullet
   m_SortingLayers:
   - name: Default

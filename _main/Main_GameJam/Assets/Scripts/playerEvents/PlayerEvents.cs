@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.Experimental.VFX;
 using UnityEngine;
 using UnityEngine.VFX;
+using Random = UnityEngine.Random;
 
 public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 {
@@ -22,7 +23,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     public int currentNumOfChick = 0;
     public float currentRepairPoints = 500;
     public float initialRepairPoints = 500;
-    
+
     [Header("Internal")] public Rigidbody rb;
     public Transform shotSpawn;
     private GameObject bulletPrefab;
@@ -36,20 +37,28 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     [SerializeField] private VisualEffect footStepRight;
     [SerializeField] private float delayToShoot;
 
+    public GameObject chick;
+    private Animator chickAnimator;
     private Animator animator;
     private Vector2 currentInput;
     private bool isMoving = false;
     private int AssID;
     private bool hasControl = true;
     public bool canShoot = true;
+    public bool isDead = false;
     [HideInInspector] public bool gameOver = false;
-    
+
     [HideInInspector] public bool eggCompleted;
     [HideInInspector] public int numberEgg;
+    private List<Vector3> spawnPosition;
 
     public void PreInitialize()
     {
+        chick = Resources.Load<GameObject>("Player/Chick/Chick");
         bulletPrefab = Resources.Load<GameObject>("Prefabs/Bullet/Egg");
+
+        chickAnimator = chick.GetComponent<Animator>();
+        
         eggCompleted = true;
         this.numberEgg = 2;
 
@@ -81,11 +90,18 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void Initialize()
     {
+        this.spawnPosition = new List<Vector3>();
+
+        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
+        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
+        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
+        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
+        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
+        this.spawnPosition.Add(new Vector3(Random.Range(-75, 69), 1, Random.Range(-70, 70)));
     }
 
     public void Refresh()
     {
-        
         if (currentNumOfChick > 0 && !gameOver)
         {
             currentRepairPoints -= currentNumOfChick * Time.deltaTime;
@@ -95,7 +111,7 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
                 gameOver = true;
             }
         }
-        Debug.Log(this + ", repairPoints : " + currentRepairPoints);
+        //Debug.Log(this + ", repairPoints : " + currentRepairPoints);
 
         //DEBUG
         if (Input.GetKeyDown(KeyCode.P))
@@ -128,17 +144,17 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         currentRepairPoints = initialRepairPoints;
         currentNumOfChick = 0;
     }
-    
+
     public void SmackThatChick()
     {
         currentNumOfChick++;
-        
+        Instantiate(chick, new Vector3(0, 0, 0), Quaternion.identity);
     }
 
     public void Move(float horizontal, float vertical)
     {
         //Block movement if player not really pushing the joystick.
-        if (hasControl)
+        if (hasControl && !isDead)
         {
             if ((horizontal < 0.01f && vertical < 0.01f) && (horizontal > -0.01f && vertical > -0.01f))
             {
@@ -194,10 +210,12 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
 
     public void Die()
     {
+        hasControl = false;
+        isDead = true;
         Debug.Log("In Die");
         animator.SetTrigger("Die");
         TimeManager.Instance.AddTimedAction(new TimedAction(
-            () => { StartCoroutine(Dissolve(300));}
+            () => { StartCoroutine(Dissolve(3)); }
             , 2));
     }
 
@@ -213,7 +231,8 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
             animator.SetTrigger("Throw");
 
             TimeManager.Instance.AddTimedAction(new TimedAction(SpawnBullet, this.delayToShoot));
-            TimeManager.Instance.AddTimedAction(new TimedAction(() => { hasControl = true; }, this.delayToShoot + 0.1f));
+            TimeManager.Instance.AddTimedAction(new TimedAction(() => { hasControl = true; },
+                this.delayToShoot + 0.1f));
             hasControl = false;
             canShoot = false;
         }
@@ -232,23 +251,68 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         eggCompleted = false;
         this.numberEgg = 0;
     }
-    
+
     private IEnumerator Dissolve(float TransitionTime)
     {
         float ElapsedTime = 0.0f;
         float accumulateur = 0;
-        while (ElapsedTime < TransitionTime)
+        float ok = GetComponentInChildren<SkinnedMeshRenderer>().material.GetFloat("_DissolveValue");
+        while (ok < 1)
         {
             accumulateur += (1 / TransitionTime) * Time.deltaTime;
             ElapsedTime += Time.deltaTime;
+            ok += accumulateur;
 
-            foreach (Renderer renderer in GetComponentsInChildren<Renderer>())
+            foreach (SkinnedMeshRenderer renderer in GetComponentsInChildren<SkinnedMeshRenderer>())
             {
-                renderer.material.SetFloat("_DissolveValue",  renderer.material.GetFloat("_DissolveValue") + accumulateur);
+                renderer.material.SetFloat("_DissolveValue",
+                    renderer.material.GetFloat("_DissolveValue") + accumulateur);
             }
+
             yield return null;
         }
+
+        Respawn();
         yield return new WaitForEndOfFrame();
+    }
+
+    private IEnumerator Resolve(float TransitionTime)
+    {
+        float ElapsedTime = 0.0f;
+        float accumulateur = 0;
+        float ok = GetComponentInChildren<SkinnedMeshRenderer>().material.GetFloat("_DissolveValue");
+        while (ok > -1)
+        {
+            accumulateur += (1 / TransitionTime) * Time.deltaTime;
+            ElapsedTime += Time.deltaTime;
+            ok -= accumulateur;
+
+            foreach (SkinnedMeshRenderer renderer in GetComponentsInChildren<SkinnedMeshRenderer>())
+            {
+                renderer.material.SetFloat("_DissolveValue",
+                    renderer.material.GetFloat("_DissolveValue") - accumulateur);
+            }
+
+            yield return null;
+        }
+
+        gameObject.tag = this.AssID.ToString();
+        hasControl = true;
+
+        yield return new WaitForEndOfFrame();
+    }
+
+    public void Respawn()
+    {
+        transform.position = this.spawnPosition[Random.Range(0, this.spawnPosition.Count - 1)];
+        animator.SetTrigger("Respawn");
+        gameObject.tag = "IRON ASS";
+    
+        TimeManager.Instance.AddTimedAction(new TimedAction(
+            () => { StartCoroutine(Resolve(3)); }, 2f
+        ));
+
+        isDead = false;
     }
 
     public void OnDrawGizmos()

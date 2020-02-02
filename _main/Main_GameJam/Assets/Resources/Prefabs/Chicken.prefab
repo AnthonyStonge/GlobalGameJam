@@ -350,9 +350,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13bfc8a5158a31746adf072ce9e6965f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 25
   currentNumOfChick: 0
-  repairPoints: 1000
+  currentRepairPoints: 500
+  initialRepairPoints: 500
   rb: {fileID: 3983470910506093805}
   shotSpawn: {fileID: 4192841128227659653}
   onDash:
@@ -373,6 +374,9 @@ MonoBehaviour:
   footStepLeft: {fileID: 1653396038240286253}
   footStepRight: {fileID: 7345290797908767276}
   delayToShoot: 0.2
+  canShoot: 1
+  isDead: 0
+  gameOver: 0
   eggCompleted: 0
   numberEgg: 0
 --- !u!54 &3983470910506093805
