@@ -62,13 +62,20 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
     private GameObject actualCannonPrefab;
     private GameObject stepsParticuleSystem;
     public VisualEffect deathVisual;
+    private SkinnedMeshRenderer[] skinnedMeshArray;
 
+    private float factor;
     public void PreInitialize()
     {
+        float intensity = 2;
+        factor = Mathf.Pow(2, intensity);
+        
         chick = Resources.Load<Chick>("Player/Chick/Chick");
         bulletPrefab = Resources.Load<GameObject>("Prefabs/Bullet/Egg");
         this.stepsParticuleSystem = Resources.Load<GameObject>("VFX/Steps");
 
+        skinnedMeshArray = GetComponentsInChildren<SkinnedMeshRenderer>();
+        
         chickAnimator = chick.GetComponent<Animator>();
 
         eggCompleted = true;
@@ -101,6 +108,8 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         AddAction(Event.STOP_MOVING, StopMoving);
         AddAction(Event.FOOT_STEP_LEFT, Foot_Step_Left);
         AddAction(Event.FOOT_STEP_RIGHT, Foot_Step_Right);
+        
+        PlayerGlow();
     }
 
     public void Initialize()
@@ -153,6 +162,26 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         if (Input.GetKeyDown(KeyCode.P))
         {
             Game.Instance.gameState = Game.GameState.EndGame;
+        }
+    }
+
+    public void PlayerGlow()
+    {
+        foreach (var i in skinnedMeshArray)
+        {
+            Color col = i.material.color;
+            Color color = new Color(col.r * factor, col.g * factor, col.b * factor);
+            i.material.color = color;
+        }
+    }
+
+    public void PlayerShootingGlow()
+    {
+        foreach (var i in skinnedMeshArray)
+        {
+            Color col = i.material.color;
+            Color color = new Color(col.r / factor, col.g / factor, col.b / factor);
+            i.material.color = color;
         }
     }
 
@@ -299,8 +328,8 @@ public class PlayerEvents : CustomEventBehaviour<PlayerEvents.Event>, IFlow
         if (eggCompleted && canShoot)
         {
             animator.SetTrigger("Throw");
-            
-        
+
+            PlayerShootingGlow();
 
             TimeManager.Instance.AddTimedAction(new TimedAction(SpawnBullet, this.delayToShoot));
             TimeManager.Instance.AddTimedAction(new TimedAction(() => { hasControl = true; },

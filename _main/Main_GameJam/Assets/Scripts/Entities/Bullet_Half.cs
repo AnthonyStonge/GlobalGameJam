@@ -45,6 +45,7 @@ public class Bullet_Half : MonoBehaviour
             {
                 events.eggCompleted = true;
                 events.canShoot = true;
+                events.PlayerGlow();
             }
             
                 
